@@ -195,6 +195,12 @@ body {
     box-shadow: #000000 0px 0px 2px;
 }
 
+
+.work-item, .work-item-2 img:hover {
+  transform: scale(1.05); /* Sedikit memperbesar gambar saat hover */
+  transition: transform 0.3s ease; /* Animasi transisi */
+}
+
 /* Contact Section */
 .contact {
   padding: 4vw;
@@ -403,8 +409,19 @@ body {
   text-align: right;
 }
 
+.contact-box a {
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  font-weight: 200;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.contact-box a:hover{
+  color: #ddd3f5; /* Warna saat hover */
+}
+
 @media screen and (max-width: 1280px) {
-  
   
   .header1 {
     font-size: clamp(200px, 20vw, 150px);
@@ -417,13 +434,25 @@ body {
   .imageHome {
     max-width: 50vw;
   }
-  .contact-box {
-    max-width: 32vw;  /* Lebar dikurangi */
+  .contact-box, 
+  .affiliaton {
+    width: 100%;         /* Fill most of the viewport */
+    max-width: 500px;   /* But do not grow wider than 700px */
+    padding: 26px;      /* Reduced padding */
+    margin-top: 20px;   /* Spacing at the top */
   }
-    .affiliaton {
-    max-width: 32vw;  /* Lebar dikurangi */
+  
+  .contact-wrapper {
+    align-items: center;    /* Center the boxes */
+    gap: 30px;              /* Gap between boxes */
+  }
+  
+  .contact-box h2,
+  .affiliaton h2 {
+    font-size: clamp(18px, 2vw, 24px); /* Responsive heading size */
   }
 }
+
 
 @media screen and (max-width: 960px) {
  .box-container {
@@ -466,40 +495,50 @@ body {
         margin: 20vw 0 0 12vw; /* top, right, bottom, left */
     }
     
-  .contact-box {
-    max-width: 70vw;
-    font-size: clamp(12px, 1.5vw, 16px);
-    margin: 16vw 0 0 12vw; /* top, right, bottom, left */
+  .contact-box, 
+  .affiliaton {
+    width: 90%;         /* Fill most of the viewport */
+    max-width: 700px;   /* But do not grow wider than 700px */
+    padding: 26px;      /* Reduced padding */
+    margin-top: 20px;   /* Spacing at the top */
   }
-  .contact-box p {
-    font-weight: 200;
-    margin-top: 6px;
+  
+  .contact-wrapper {
+    flex-direction: column; /* Stack boxes vertically */
+    align-items: center;    /* Center the boxes */
+    gap: 20px;              /* Gap between boxes */
+  }
+  
+  .contact-box h2,
+  .affiliaton h2 {
+    font-size: clamp(18px, 2vw, 24px); /* Responsive heading size */
+  }
 }
 
-    .contact-box h1 {
-        font-size: clamp(18px, 1.5vw, 20px);
-        margin-top: 30px;
-        margin-bottom: 20px;
-        font-weight: 700;
-    }
-}
 
 @media screen and (max-width: 600px) {
-  .header1 {
-    font-size: clamp(18px, 8vw, 50px);
+  .contact-wrapper {
+    display: flex;
+    flex-direction: column;  /* Susun sehingga kedua box ditempatkan secara vertikal */
+    align-items: center;     /* Pusatkan secara horizontal */
+    gap: 20px;               /* Jarak antar box */
+    padding: 0 10px;         /* Tambahkan sedikit padding di sisi agar tidak menabrak pinggir layar */
   }
-  .navbar button {
-    font-size: 13px;
-    padding: 6px 12px;
-  }
-  .contact-box {
-    font-size: 14px;
-  }
-}
 
-@media screen and (max-width: 720px) {
-        .header1 {
-        font-size: 24vw;
-        letter-spacing: -5px;
-    }
+  .contact-box,
+  .affiliaton {
+    width: 90%;              /* Ambil 90% lebar layar, sehingga ada ruang pada sisi */
+    max-width: 450px;        /* Batasi supaya tidak terlalu lebar pada handphone */
+    margin: 20px 0;          /* Jarak vertikal antar elemen */
+    padding: 20px;           /* Padding dalam agar tidak terlalu mepet */
+    box-sizing: border-box;  /* Pastikan padding dihitung dalam lebar total */
+  }
+
+  .contact-box h2,
+  .affiliaton h2 {
+    font-size: clamp(18px, 3vw, 24px);
+  }
+  .copyright {
+    font-size: clamp(14px, 2vw, 16px);
+  }
 }
