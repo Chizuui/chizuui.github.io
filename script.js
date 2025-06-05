@@ -1,26 +1,33 @@
 document.addEventListener('DOMContentLoaded', function() {
   const sections = document.querySelectorAll('section');
   const navLinks = document.querySelectorAll('.navbar a');
-  
-  // Adjust these options to your layout.
+
+  // Tambahkan click listener untuk setiap nav link
+  navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      // Hapus kelas .active dari semua link
+      navLinks.forEach(l => l.classList.remove('active'));
+      // Tambahkan .active pada link yang diklik
+      this.classList.add('active');
+    });
+  });
+
   const observerOptions = {
-    root: null,           // use the viewport
-    threshold: 0.3,       // section is active when at least 30% is visible
-    // Shift the viewport downward to compensate for your fixed header height, if needed.
-    rootMargin: "-100px 0px 0px 0px"
+    root: null,           // gunakan viewport
+    threshold: 0.3,       // section dianggap aktif jika setidaknya 30% terlihat
+    rootMargin: "-100px 0px 0px 0px" // atur offset atas (sesuaikan jika ada fixed header)
   };
 
-  // Create the observer
+  // Buat observer untuk mendeteksi bagian yang sedang aktif
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // Remove active class from all nav links
+        // Hapus kelas .active dari semua link
         navLinks.forEach(link => link.classList.remove('active'));
         
-        // Get ID of the section in view
+        // Dapatkan id section yang sedang aktif
         const id = entry.target.getAttribute('id');
-        
-        // Add active class to the corresponding nav link
+        // Cari link navigasi yang sesuai dan tambahkan kelas .active
         const activeLink = document.querySelector(`.navbar a[href="#${id}"]`);
         if (activeLink) {
           activeLink.classList.add('active');
@@ -29,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }, observerOptions);
 
+  // Observasi setiap section
   sections.forEach(section => observer.observe(section));
 
 

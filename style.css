@@ -63,7 +63,7 @@ body {
   text-decoration: none;
   background-color: #7700ee;
   color: white;
-  font-weight: 200;
+  font-weight: 500;
 }
 
 
@@ -329,6 +329,10 @@ body {
     transition: 0.2s ease-in-out;     /* Sedikit memperbesar ikon saat hover */
 }
 
+.fb-text, .ig-text, .vgen-text, .github-text, {
+      font-weight: 400;
+}
+
 .socialMediaIcon {
   display: flex;
   flex-direction: column; /* Arrange child elements in a column */
@@ -413,7 +417,7 @@ body {
   text-decoration: none;
   font-size: 18px;
   color: white;
-  font-weight: 200;
+  font-weight: 500;
   font-family: "Plus Jakarta Sans", sans-serif;
 }
 
@@ -429,7 +433,8 @@ body {
     letter-spacing: -10px;
   }
   .paragraph {
-    max-width: 75vw;
+    max-width: 100vw;
+    font-size: 12px;
   }
   .imageHome {
     max-width: 50vw;
@@ -451,13 +456,16 @@ body {
   .affiliaton h2 {
     font-size: clamp(18px, 2vw, 24px); /* Responsive heading size */
   }
+  .box1 {
+    flex-direction: row;
+  }
 }
 
 
 @media screen and (max-width: 960px) {
  .box-container {
-    flex-direction: column; /* Susun box secara vertikal */
     align-items: center; /* Pusatkan box */
+    font-size: 10px;
   }
   
   .box1 {
@@ -487,14 +495,14 @@ body {
     max-width: 60vw;
   }
     .header1 {
-        font-size: 40vw;
-        line-height: 35vw;
-        letter-spacing: -14px;
+        font-size: 25vw;
+        line-height: 30vw;
+        letter-spacing: -6px;
     }
     .copyright {
         margin: 20vw 0 0 12vw; /* top, right, bottom, left */
     }
-    
+  
   .contact-box, 
   .affiliaton {
     width: 90%;         /* Fill most of the viewport */
