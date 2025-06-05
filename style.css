@@ -1,0 +1,505 @@
+/* Reset Global */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  cursor: url('Assets/Cursor/2.svg'), auto;
+}
+body {
+    overflow-x: hidden;
+}
+
+/* Homepage Section */
+.homepage {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    width: 100%;
+    min-height: 100vh;
+    padding: 5vw;
+    background: linear-gradient(180deg, #ddd3f5 0%, #ffffff 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+.header1 {
+    width: 100%;
+    height: auto;
+    font-size: clamp(300px, 26vw, 200px);
+    font-family: "Plus Jakarta Sans",sans-serif;
+    font-weight: 700;
+    color: #000000;
+    letter-spacing: -14px;
+    position: relative;
+    z-index: 2;
+}
+
+.paragraph {
+  font-size: clamp(20px, 1.5vw, 18px);
+  color: #333;
+  line-height: 1.6;
+  text-align: justify;
+  max-width: 55vw;  /* Lebar dikurangi */
+  margin: 0 auto;
+  font-weight: 700;
+}
+
+.box-container {
+  display: flex;                 /* Susun anak-anak secara horizontal */
+  gap: 10px;                     /* Beri jarak antar box */
+  justify-content: center;       /* Opsional: untuk meratakan secara horizontal */
+  align-items: center;           /* Ratakan vertikal */
+}
+
+.box1 {
+  margin-top: 3vw;
+  padding: 12px 25px;
+  min-width: 50px;
+  border-radius: 32px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  background-color: #7700ee;
+  color: white;
+  font-weight: 200;
+}
+
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0px;
+  width: auto;
+  background: rgba(255, 255, 255, 0);
+  padding: 10px 5%;  /* Menggunakan persen agar responsif */
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.navbar ul {
+  display: flex;
+  gap: 10px;  /* Gap dikurangi */
+  list-style: none;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar a {
+  text-decoration: none;
+}
+
+.navbar button {
+  padding: 8px 16px;  /* Diperkecil */
+  font-size: 14px;  /* Gunakan ukuran font yang lebih kecil */
+  background-color: white;
+  border: 2px solid #3700B3;
+  color: black;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logo {
+    width: 12vh;
+    top: 14px;
+    position: relative;
+    margin-right: 10px;
+    z-index: 1000; /* Pastikan logo berada di atas elemen lain */
+}
+
+.navbar button:hover {
+    background-color: #3700B3;
+    color: white;
+    cursor: url('Assets/Cursor/2.svg'), auto;
+}
+
+/* Style ketika link aktif */
+.navbar a.active button {
+  background-color: #3700B3;
+  color: white;
+}
+
+/* Image Home */
+.imageHome {
+  display: block;
+  max-width: 30vw;  /* Lebar diperkecil */
+  height: auto;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  margin: 1.5rem auto;
+}
+
+/* Works Section */
+.works {
+    padding: 2vw;
+    margin-top: 5rem;
+    text-align: left;
+    font-family: "Plus Jakarta Sans";
+}
+
+.work-item, .work-item-2 {
+    margin-top: 5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Agar heading selalu berada di baris baru dan tampil penuh di atas gambar */
+.work-item h2 {
+    width: 100%;           /* Mengambil seluruh lebar container */
+    flex-basis: 100%;      /* Memastikan heading memulai baris baru */
+    font-size: clamp(18px, 2vw, 24px);
+    margin-bottom: 2rem;   /* Jarak bawah untuk .work-item h2 */
+    text-align: center;
+    font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.work-item-2 h2 {
+    width: 100%;           /* Mengambil seluruh lebar container */
+    flex-basis: 100%;      /* Memastikan heading memulai baris baru */
+    font-size: clamp(18px, 2vw, 24px);
+    margin-bottom: -1rem;   /* Ditingkatkan agar ada jarak lebih besar dengan gambar */
+    text-align: center;
+    margin-top: -2rem;
+    font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+
+/* Aturan gambar yang ada di dalam .work-item dan .work-item-2 */
+.work-item img,
+.work-item-2 img {
+  max-width: 20%;
+  height: auto;
+  border-radius: 10px;
+    border-color: black;
+    border-style: ridge;
+    box-shadow: #000000 0px 0px 2px;
+
+}
+
+/* Jika diperlukan, tambahkan margin-top khusus untuk gambar di .work-item-2 */
+.work-item-2 img {
+    max-width: 40%;
+    align-content: left;
+    margin-bottom: -1rem;
+    margin-top: 1rem; /* Menambahkan jarak ekstra dari heading */
+    border-color: black;
+    border-style: ridge;
+    box-shadow: #000000 0px 0px 2px;
+}
+
+/* Contact Section */
+.contact {
+  padding: 4vw;
+  text-align: center;
+      font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.github-box {
+  display: flex;                 /* Arrange icon and text in a row */
+  align-items: center;           /* Vertically center the content */
+  padding: 6px 14px;             /* Vertical and horizontal padding */
+  min-width: 50px;              /* Minimum width to ensure horizontal stretch */
+  border-radius: 32px;            /* Rounded corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;         /* Remove underline on links */
+  background-color:white;
+}
+
+.github-box .social-icon {
+  width: 30px;                   /* Set icon size */
+  height: auto;
+}
+
+.github-box .github-text {
+    margin-left: 6px;              /* Space between icon and text */
+    font-size: clamp(14px, 1vw, 14px);
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: black;
+    transition: 0.2s ease-in-out; /* Opasional: animasi saat hover */
+}
+
+.github-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: 0.2s ease-in-out;     /* Sedikit memperbesar ikon saat hover */
+}
+
+.vgen-box {
+  display: flex;                 /* Arrange icon and text in a row */
+  align-items: center;           /* Vertically center the content */
+  padding: 6px 14px;             /* Vertical and horizontal padding */
+  min-width: 50px;              /* Minimum width to ensure horizontal stretch */
+  border-radius: 32px;            /* Rounded corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;         /* Remove underline on links */
+  background-color:#b8ff26;
+  color: black;
+}
+
+.vgen-box .social-icon {
+  width: 30px;                   /* Set icon size */
+  height: auto;
+}
+
+.vgen-box .vgen-text {
+    margin-left: 6px;              /* Space between icon and text */
+    font-size: clamp(14px, 1vw, 14px);
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: black;
+    transition: 0.2s ease-in-out; /* Opasional: animasi saat hover */
+}
+
+.vgen-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: 0.2s ease-in-out;     /* Sedikit memperbesar ikon saat hover */
+}
+
+.ig-box {
+  display: flex;                 /* Arrange icon and text in a row */
+  align-items: center;           /* Vertically center the content */
+  padding: 6px 14px;             /* Vertical and horizontal padding */
+  min-width: 50px;              /* Minimum width to ensure horizontal stretch */
+  border-radius: 32px;            /* Rounded corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;         /* Remove underline on links */
+  background-color:#de3d70;
+}
+
+.ig-box .social-icon {
+  width: 30px;                   /* Set icon size */
+  height: auto;
+}
+
+.ig-box .ig-text {
+    margin-left: 6px;              /* Space between icon and text */
+    font-size: clamp(14px, 1vw, 14px);
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: white;
+    transition: 0.2s ease-in-out; /* Opasional: animasi saat hover */
+}
+
+.ig-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: 0.2s ease-in-out;     /* Sedikit memperbesar ikon saat hover */
+}
+
+.fb-box {
+  display: flex;                 /* Arrange icon and text in a row */
+  align-items: center;           /* Vertically center the content */
+  padding: 6px 14px;             /* Vertical and horizontal padding */
+  min-width: 50px;              /* Minimum width to ensure horizontal stretch */
+  border-radius: 32px;            /* Rounded corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;         /* Remove underline on links */
+  background-color:#3c5a9a;
+}
+
+.fb-box .social-icon {
+  width: 30px;                   /* Set icon size */
+  height: auto;
+}
+
+.fb-box .fb-text {
+    margin-left: 6px;              /* Space between icon and text */
+    font-size: clamp(14px, 1vw, 14px);
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: white;
+    transition: 0.2s ease-in-out; /* Opasional: animasi saat hover */
+}
+
+.fb-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: 0.2s ease-in-out;     /* Sedikit memperbesar ikon saat hover */
+}
+
+.socialMediaIcon {
+  display: flex;
+  flex-direction: column; /* Arrange child elements in a column */
+  gap: 10px;            /* Optional: add spacing between boxes */
+  margin-top: 10px;     /* Adjust as needed */
+}
+
+.social-icon {
+  width: 32px;               /* Ukuran kecil untuk ikon (sesuaikan jika perlu) */
+  height: auto;
+  transition: 0.2s ease-in-out; /* Opasional: animasi saat hover */
+}
+
+.social-icon:hover {
+    transform: translateY(-5px);
+    transition: 0.2s ease-in-out;     /* Sedikit memperbesar ikon saat hover */
+}/* Responsive Adjustments */
+
+
+.copyright {
+    font-size: clamp(8px, 1.5vw, 20px);
+    margin: 12vw 0 0 12vw; /* top, right, bottom, left */
+    text-align: right;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: 50px;
+}
+
+/* Container pembungkus kedua box */
+.contact-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;  /* Atur agar box berada di tengah container.
+                                 Alternatif: gunakan space-between/space-around sesuai kebutuhan */
+  align-items: flex-start;   /* Ratakan ke atas */
+  gap: 5vw;                  /* Jarak antar box (sesuaikan dengan keinginan) */
+  margin-top: 10vw;          /* Atur jarak atas container secara keseluruhan */
+}
+
+/* Style umum untuk contact-box dan affiliaton */
+.contact-box, 
+.affiliaton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: left;  /* Gunakan flex-start (bukan "left") untuk perataan horizontal */
+  text-align: left;
+  color: white;
+  background-color: #7700ee;
+  width: 24vw;              /* Lebar yang sama untuk kedua box */
+  height: auto;
+  padding: 40px 35px;
+  border-radius: 28px;
+}
+
+/* Aturan judul */
+.affiliaton h2, .contact-box h2 {
+  margin-bottom: 20px;
+}
+
+/* Contoh style tambahan untuk unit, role, dan year */
+.unit  {
+  margin-top: 12px;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.role {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  font-weight: 100;
+}
+
+.year {
+  font-size: 14px;
+  margin-right: 20px;
+  text-align: right;
+}
+
+@media screen and (max-width: 1280px) {
+  
+  
+  .header1 {
+    font-size: clamp(200px, 20vw, 150px);
+    line-height: 1.2;
+    letter-spacing: -10px;
+  }
+  .paragraph {
+    max-width: 75vw;
+  }
+  .imageHome {
+    max-width: 50vw;
+  }
+  .contact-box {
+    max-width: 32vw;  /* Lebar dikurangi */
+  }
+    .affiliaton {
+    max-width: 32vw;  /* Lebar dikurangi */
+  }
+}
+
+@media screen and (max-width: 960px) {
+ .box-container {
+    flex-direction: column; /* Susun box secara vertikal */
+    align-items: center; /* Pusatkan box */
+  }
+  
+  .box1 {
+    width: 100%; /* Lebar penuh */
+    text-align: center; /* Pusatkan teks */
+    margin-top: 20px; /* Jarak atas */
+  }
+  
+  .navbar {
+    position: fixed;
+    flex-direction: column;
+    padding: 10px 5%;
+  }
+  .navbar ul {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .logo {
+    width: 9vh; /* Lebar logo dikurangi */
+  }
+
+  .imageHome {
+    max-width: 70vw;
+  }
+  .work-item img,
+  .work-item-2 img {
+    max-width: 60vw;
+  }
+    .header1 {
+        font-size: 40vw;
+        line-height: 35vw;
+        letter-spacing: -14px;
+    }
+    .copyright {
+        margin: 20vw 0 0 12vw; /* top, right, bottom, left */
+    }
+    
+  .contact-box {
+    max-width: 70vw;
+    font-size: clamp(12px, 1.5vw, 16px);
+    margin: 16vw 0 0 12vw; /* top, right, bottom, left */
+  }
+  .contact-box p {
+    font-weight: 200;
+    margin-top: 6px;
+}
+
+    .contact-box h1 {
+        font-size: clamp(18px, 1.5vw, 20px);
+        margin-top: 30px;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+}
+
+@media screen and (max-width: 600px) {
+  .header1 {
+    font-size: clamp(18px, 8vw, 50px);
+  }
+  .navbar button {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+  .contact-box {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+        .header1 {
+        font-size: 24vw;
+        letter-spacing: -5px;
+    }
+}
