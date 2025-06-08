@@ -31,7 +31,7 @@ body {
     font-size: clamp(300px, 26vw, 200px);
     font-family: "Plus Jakarta Sans",sans-serif;
     font-weight: 700;
-    color: #000000;
+    color: #6801ce;
     letter-spacing: -14px;
     position: relative;
     z-index: 2;
@@ -44,7 +44,8 @@ body {
   text-align: justify;
   max-width: 55vw;  /* Lebar dikurangi */
   margin: 0 auto;
-  font-weight: 700;
+  font-weight: 500;
+  text-transform: capitalize;
 }
 
 .box-container {
@@ -181,7 +182,7 @@ body {
     border-color: black;
     border-style: ridge;
     box-shadow: #000000 0px 0px 2px;
-
+    filter: saturate(0%);
 }
 
 /* Jika diperlukan, tambahkan margin-top khusus untuk gambar di .work-item-2 */
@@ -193,12 +194,13 @@ body {
     border-color: black;
     border-style: ridge;
     box-shadow: #000000 0px 0px 2px;
+    filter: saturate(0%);
 }
 
-
-.work-item, .work-item-2 img:hover {
-  transform: scale(1.05); /* Sedikit memperbesar gambar saat hover */
-  transition: transform 0.3s ease; /* Animasi transisi */
+.work-item img:hover,
+.work-item-2 img:hover {
+    filter: saturate(100%); /* Mengembalikan saturasi penuh saat hover */
+    transition: filter 0.1s ease; /* Transisi halus saat hover */
 }
 
 /* Contact Section */
@@ -468,6 +470,11 @@ body {
     font-size: 10px;
   }
   
+  .work-item img,
+.work-item-2 img {
+  filter: saturate(100%);
+}
+
   .box1 {
     width: 100%; /* Lebar penuh */
     text-align: center; /* Pusatkan teks */
