@@ -5,123 +5,179 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
     <title>Chizui Portfolio</title>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Google Fonts for Material You Pixel look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0" />
+    <script src="script.js" defer></script>
 </head>
-<body>
-
-    <section class="homepage" id="home">
-        <h1 class="header1" data-aos="fade-up" data-aos-delay="400" class="aos-init aos-animate">chizz.ui</h1>
-        <p class="paragraph" data-aos="fade-up" data-aos-delay="500" class="aos-init aos-animate">
-            Hello. I am Desca, or commonly known as Chizui. I am a Graphic Designer. 
-            And also I am a developer who likes C++, and HTML CSS. I made this web to put my portfolio. 
-            Click the "Works" button to see. Thank you ><
-        </p>
-    <div class="box-container">
-        <span class="box1" class="aos-init aos-animate">Graphic Designer</span>
-        <span class="box1" class="aos-init aos-animate">Tech Enthusiast</span>
-        <span class="box1" class="aos-init aos-animate">Newbie Programmer</span>
-    </div>
-    </section>
-    <div class="navbar">    
-        <ul>
-            <li>
-                <img src="Assets/logo.png" alt="Logo" class="logo">
-                <a href="#home"><button>Home</button></a>
-                <a href="#works"><button>Works</button></a>
-                <a href="#contact"><button>Contact</button></a>
-            </li>
-        </ul>
+<body class="theme-dark">
+    <!-- Animated Material Background Blobs -->
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
     </div>
 
+    <!-- Theme Switcher FABs -->
+    <div class="fab-container">
+        <button id="theme-toggle" class="fab tonal-fab" title="Toggle Dark/Light Mode">
+            <span class="material-symbols-outlined" id="theme-icon">light_mode</span>
+        </button>
+        <button id="color-toggle" class="fab primary-fab" title="Change Monet Color">
+            <span class="material-symbols-outlined">palette</span>
+        </button>
+    </div>
 
-    <section class="works" id="works" data-aos="fate-up">
-        <div class="work-item" data-aos="fade-up">
-            <h2 class="header2">POSTER DESIGN</h2>
-            <img src="Assets/Poster/poster1.webp" alt="Work 1" data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate" onclick="window.open('https://www.instagram.com/p/DIATJgmTR5A/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
-            <img src="Assets/Poster/poster2.webp" alt="Work 2" data-aos="fade-down" data-aos-delay="400" class="aos-init aos-animate" onclick="window.open('https://www.instagram.com/p/DHA6sUEzA-r/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
-            <img src="Assets/Poster/poster3.webp" alt="Work 3" data-aos="fade-up" data-aos-delay="600" class="aos-init aos-animate" onclick="window.open('https://www.instagram.com/p/DJMTrq9zUdq/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
-            <img src="Assets/Poster/poster4.webp" alt="Work 4" data-aos="fade-down" data-aos-delay="800" class="aos-init aos-animate" onclick="window.open('https://www.instagram.com/p/DI8359JzzZO/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
-            <img src="Assets/Poster/poster5.webp" alt="Work 4" data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate" onclick="window.open('https://www.instagram.com/p/DGPUvpWzdsJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
-            <img src="Assets/Poster/poster6.webp" alt="Work 4" data-aos="fade-down" data-aos-delay="400" class="aos-init aos-animate" onclick="window.open('https://www.instagram.com/p/DF9FMJyT4Ua/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
-            <img src="Assets/Poster/poster7.webp" alt="Work 4" data-aos="fade-up" data-aos-delay="600" class="aos-init aos-animate" onclick="window.open('https://www.instagram.com/p/DGznEsGxW2n/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
-            <img src="Assets/Poster/poster8.webp" alt="Work 4" data-aos="fade-down" data-aos-delay="800" class="aos-init aos-animate" onclick="window.open('https://www.facebook.com/share/p/19CBXvKZwx/', '_blank');">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <img src="Assets/logo.png" alt="Logo" class="logo">
+            <div class="nav-chips">
+                <a href="#home" class="nav-chip active">Home</a>
+                <a href="#works" class="nav-chip">Works</a>
+                <a href="#contact" class="nav-chip">Contact</a>
+            </div>
         </div>
-        <div class="work-item-2" data-aos="fade-up">
-            <h2 class="header2">OTHER DESIGN</h2>
-            <img src="Assets/Other/2.webp" alt="Work 5" data-aos="fade-right" data-aos-delay="200" class="aos-init aos-animate">
-            <img src="Assets/Other/3.webp" alt="Work 6" data-aos="fade-left" data-aos-delay="300" class="aos-init aos-animate">
-            <img src="Assets/Other/4.webp" alt="Work 6" data-aos="fade-right" data-aos-delay="400" class="aos-init aos-animate">
-            <img src="Assets/Other/5.webp" alt="Work 6" data-aos="fade-left" data-aos-delay="500" class="aos-init aos-animate">
-            <img src="Assets/Other/6.webp" alt="Work 6" data-aos="fade-right" data-aos-delay="600" class="aos-init aos-animate">
-            <img src="Assets/Other/7.webp" alt="Work 6" data-aos="fade-left" data-aos-delay="700" class="aos-init aos-animate">
+    </nav>
+
+    <!-- Homepage Section -->
+    <section class="homepage section-container" id="home">
+        <div class="hero-card elevated-card">
+            <h1 class="header1">chizz.ui</h1>
+            <p class="paragraph">
+                Hi, I'm Desca, also known as Chizui. I'm a passionate Graphic Designer and 
+                an aspiring Software Developer with a strong interest in C++ and frontend development. 
+                Welcome to my digital portfolio!
+            </p>
+            <div class="tags-container">
+                <span class="tag tonal-chip">Graphic Designer</span>
+                <span class="tag tonal-chip">Software Developer</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Works Section -->
+    <section class="works section-container" id="works">
+        <!-- Poster Design -->
+        <h2 class="section-title">Poster Design</h2>
+        <div class="gallery-grid">
+            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DIATJgmTR5A/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+                <img src="Assets/Poster/poster1.webp" alt="Poster 1">
+            </div>
+            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DHA6sUEzA-r/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+                <img src="Assets/Poster/poster2.webp" alt="Poster 2">
+            </div>
+            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DJMTrq9zUdq/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+                <img src="Assets/Poster/poster3.webp" alt="Poster 3">
+            </div>
+            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DI8359JzzZO/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+                <img src="Assets/Poster/poster4.webp" alt="Poster 4">
+            </div>
+            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DGPUvpWzdsJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+                <img src="Assets/Poster/poster5.webp" alt="Poster 5">
+            </div>
+            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DF9FMJyT4Ua/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+                <img src="Assets/Poster/poster6.webp" alt="Poster 6">
+            </div>
+            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DGznEsGxW2n/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+                <img src="Assets/Poster/poster7.webp" alt="Poster 7">
+            </div>
+            <div class="gallery-card elevated-card" onclick="window.open('https://www.facebook.com/share/p/19CBXvKZwx/', '_blank');">
+                <img src="Assets/Poster/poster8.webp" alt="Poster 8">
+            </div>
+        </div>
+
+        <!-- Other Design -->
+        <h2 class="section-title">Other Design</h2>
+        <div class="gallery-grid">
+            <div class="gallery-card elevated-card">
+                <img src="Assets/Other/2.webp" alt="Other 2">
+            </div>
+            <div class="gallery-card elevated-card">
+                <img src="Assets/Other/3.webp" alt="Other 3">
+            </div>
+            <div class="gallery-card elevated-card">
+                <img src="Assets/Other/4.webp" alt="Other 4">
+            </div>
+            <div class="gallery-card elevated-card">
+                <img src="Assets/Other/5.webp" alt="Other 5">
+            </div>
+            <div class="gallery-card elevated-card">
+                <img src="Assets/Other/6.webp" alt="Other 6">
+            </div>
+            <div class="gallery-card elevated-card">
+                <img src="Assets/Other/7.webp" alt="Other 7">
+            </div>
+        </div>
     </section>     
 
-    <section class="contact" id="contact" data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">
-        <div class="contact-info">
-        </div>
-<div class="contact-wrapper">
-  <div class="contact-box">
-    <h2>Let's Be Connect Together</h2>
-  <p>
-    <a class="mailto-link" href="mailto:keju@chizui.dev">keju@chizui.dev</a>
-  </p>
-    <h1>Another Platform : </h1>
-    <div class="socialMediaIcon">
-      <a onclick="window.open('https://web.facebook.com/AmagiriYuki01/', '_blank');" class="aos-init aos-animate fb-box">
-        <img src="Assets/Icon/fb.svg" alt="Facebook" class="social-icon">
-        <span class="fb-text">Akamiya Chizui</span>
-      </a>
-      <a onclick="window.open('https://instagram.com/chizz.ui/', '_blank');" class="aos-init aos-animate ig-box">
-        <img src="Assets/Icon/ig.svg" alt="Instagram" class="social-icon">
-        <span class="ig-text">@chizz.ui</span>
-      </a>
-      <a onclick="window.open('https://vgen.co/ChizzUI/portfolio', '_blank');" class="aos-init aos-animate vgen-box">
-        <img src="Assets/Icon/vgen.svg" alt="Vgen" class="social-icon">
-        <span class="vgen-text">@ChizzUI</span>
-      </a>  
-      <a onclick="window.open('https://github.com/Chizuui', '_blank');" class="aos-init aos-animate github-box">
-        <img src="Assets/Icon/github.svg" alt="Github" class="social-icon">
-        <span class="github-text">Github</span>
-      </a>
-    </div>
-  </div>
+    <!-- Contact Section -->
+    <section class="contact section-container" id="contact">
+        <div class="contact-grid">
+            <div class="contact-card primary-container-card">
+                <h2>Let's Connect</h2>
+                <div class="email-container">
+                    <span class="material-symbols-outlined">mail</span>
+                    <a class="mailto-link" href="mailto:keju@chizui.dev">keju@chizui.dev</a>
+                </div>
+                
+                <h3 class="socials-title">Platforms</h3>
+                <div class="social-chips">
+                    <a onclick="window.open('https://web.facebook.com/AmagiriYuki01/', '_blank');" class="social-chip">
+                        <img src="Assets/Icon/fb.svg" alt="Facebook" class="icon-svg">
+                        <span>Akamiya Chizui</span>
+                    </a>
+                    <a onclick="window.open('https://instagram.com/chizz.ui/', '_blank');" class="social-chip">
+                        <img src="Assets/Icon/ig.svg" alt="Instagram" class="icon-svg">
+                        <span>@chizz.ui</span>
+                    </a>
+                    <a onclick="window.open('https://vgen.co/ChizzUI/portfolio', '_blank');" class="social-chip">
+                        <img src="Assets/Icon/vgen.svg" alt="Vgen" class="icon-svg">
+                        <span>@ChizzUI</span>
+                    </a>  
+                    <a onclick="window.open('https://github.com/Chizuui', '_blank');" class="social-chip">
+                        <img src="Assets/Icon/github.svg" alt="Github" class="icon-svg">
+                        <span>Github</span>
+                    </a>
+                </div>
+            </div>
 
-  <div class="affiliaton">
-    <h2>Affiliation</h2>
-    <div class="unit">
-      <h4>Oxure Studio</h4>
-    </div>
-    <div class="role">
-      <h4>Graphic Designer</h4>
-      <h4 class="year">Since 2024</h4>
-    </div>
-    <div class="unit">
-      <p>nskg.team+</p>
-    </div>
-    <div class="role">
-      <h4>Graphic Designer</h4>
-      <h4 class="year">Since 2024</h4>
-    </div>
-    <div class="unit">
-      <p>realm.origins</p>
-    </div>
-    <div class="role">
-      <h4>Graphic Designer</h4>
-      <h4 class="year">Since 2024</h4>
-    </div>
-  </div>
-</div>
+            <div class="affiliation-card secondary-container-card">
+                <h2>Affiliation</h2>
+                
+                <div class="affiliation-item">
+                    <div class="affil-header">
+                        <h4>Oxure Studio</h4>
+                        <span class="year badge">Since 2024</span>
+                    </div>
+                    <p class="role">Graphic Designer</p>
+                </div>
+
+                <div class="affiliation-item">
+                    <div class="affil-header">
+                        <h4>nskg.team+</h4>
+                        <span class="year badge">Since 2024</span>
+                    </div>
+                    <p class="role">Graphic Designer</p>
+                </div>
+
+                <div class="affiliation-item">
+                    <div class="affil-header">
+                        <h4>realm.origins</h4>
+                        <span class="year badge">Since 2024</span>
+                    </div>
+                    <p class="role">Graphic Designer</p>
+                </div>
+            </div>
+        </div>
+
         <div class="copyright">
             <p>©2025 chizz.ui All right reserved ♥️</p>
-            <p>Version 1.0.1 Work In Progress</p>
-            <p>Last Mdified 31 August 2025</p>
+            <p>M3 Styled Version - Work In Progress</p>
         </div>
     </section>
-    <script>
-        AOS.init();
-    </script>
 </body>
 </html>
