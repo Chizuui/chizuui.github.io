@@ -433,17 +433,25 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background-color: var(--sys-color-surface);
-    color: var(--sys-color-on-surface);
+    background-color: rgba(0,0,0,0.05);
+    color: inherit;
     border-radius: var(--border-radius-pill);
     text-decoration: none;
     font-weight: 500;
     transition: transform var(--anim-standard), background-color var(--anim-standard);
 }
 
+.theme-dark .social-chip {
+    background-color: rgba(255,255,255,0.1);
+}
+
 .social-chip:hover {
     transform: scale(1.05);
-    background-color: var(--sys-color-surface-container-high);
+    background-color: rgba(0,0,0,0.1);
+}
+
+.theme-dark .social-chip:hover {
+    background-color: rgba(255,255,255,0.15);
 }
 
 .icon-svg {
