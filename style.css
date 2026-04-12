@@ -20,8 +20,8 @@
     
     --sys-color-surface-container: hsl(var(--m3-hue), 25%, 95%);
     --sys-color-surface-container-high: hsl(var(--m3-hue), 30%, 92%);
-    --elevation-1: 0px 8px 32px rgba(0, 0, 0, 0.05);
-    --elevation-2: 0px 12px 48px rgba(0, 0, 0, 0.08);
+    --elevation-1: 0px 8px 32px rgba(0, 0, 0, 0.1);
+    --elevation-2: 0px 12px 48px rgba(0, 0, 0, 0.15);
     
     --border-radius-large: 28px;
     --border-radius-medium: 16px;
@@ -48,8 +48,8 @@
     
     --sys-color-surface-container: hsl(var(--m3-hue), 15%, 12%);
     --sys-color-surface-container-high: hsl(var(--m3-hue), 15%, 18%);
-    --elevation-1: 0px 8px 32px rgba(0, 0, 0, 0.2);
-    --elevation-2: 0px 12px 48px rgba(0, 0, 0, 0.4);
+    --elevation-1: 0px 8px 32px rgba(0, 0, 0, 0.3);
+    --elevation-2: 0px 12px 48px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -266,7 +266,7 @@ body {
 /* Cards */
 .elevated-card {
     background-color: var(--sys-color-surface-container);
-    border-radius: var(--border-radius-large);
+    border-radius: var(--border-radius-medium);
     padding: 3rem;
     box-shadow: var(--elevation-1);
     transition: transform var(--anim-standard), box-shadow var(--anim-standard), background-color var(--anim-standard);
@@ -281,7 +281,8 @@ body {
     color: var(--sys-color-on-primary-container);
     border-radius: var(--border-radius-large);
     padding: 2.5rem;
-    transition: background-color var(--anim-standard);
+    box-shadow: var(--elevation-1);
+    transition: background-color var(--anim-standard), box-shadow var(--anim-standard);
 }
 
 .secondary-container-card {
@@ -289,7 +290,8 @@ body {
     color: var(--sys-color-on-secondary-container);
     border-radius: var(--border-radius-large);
     padding: 2.5rem;
-    transition: background-color var(--anim-standard);
+    box-shadow: var(--elevation-1);
+    transition: background-color var(--anim-standard), box-shadow var(--anim-standard);
 }
 
 /* Typography styles */
@@ -368,6 +370,20 @@ body {
 .gallery-card:hover img {
     transform: scale(1.05);
     filter: grayscale(0%);
+}
+
+/* Other Design */
+.other-gallery {
+    align-items: start;
+}
+
+.other-gallery .gallery-card {
+    aspect-ratio: auto;
+}
+
+.other-gallery .gallery-card img {
+    height: auto;
+    display: block;
 }
 
 /* Contact Grid */
