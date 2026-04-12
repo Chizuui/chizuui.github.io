@@ -1,7 +1,5 @@
-/* Material Design 3 / Monet Dynamic Theme System */
 :root {
-    /* Monet System - Base Hue & Saturation */
-    --m3-hue: 265; /* Default purple */
+    --m3-hue: 265;
     --m3-sat: 80%;
 
     /* Light Theme Colors */
@@ -67,7 +65,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Lightweight Background Animated Blobs */
 .background-blobs {
     position: fixed;
     top: 0;
@@ -84,7 +81,6 @@ body {
 .blob {
     position: absolute;
     border-radius: 50%;
-    /* Hardware accelerated animations only */
 }
 
 .blob-1 {
@@ -553,7 +549,7 @@ body {
     }
     
     .fab-container {
-        bottom: 5rem; /* Move FABs up to avoid bottom app bar */
+        bottom: 5rem;
     }
 
     .header1 {
@@ -565,7 +561,6 @@ body {
     }
 }
 
-/* Scroll Animations (Replacing AOS) */
 .animate-on-scroll {
     opacity: 0;
     transform: translateY(30px) scale(0.98);
