@@ -94,4 +94,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('contextmenu', function (e) {
         e.preventDefault();
     });
+
+    /* ==== Externalized Gallery Card Navigation ==== */
+    const galleryCards = document.querySelectorAll('.gallery-card[data-href]');
+    galleryCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const url = this.getAttribute('data-href');
+            if (url) {
+                window.open(url, '_blank', 'noopener,noreferrer');
+            }
+        });
+    });
 });

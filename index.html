@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://kit.fontawesome.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://ka-f.fontawesome.com; img-src 'self' data: https:; connect-src 'self' https://ka-f.fontawesome.com;">
     <link rel="stylesheet" href="style.css">
     <title>Chizui Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,14 +14,12 @@
     <script src="script.js" defer></script>
 </head>
 <body class="theme-dark">
-    <!-- Animated Background -->
     <div class="background-blobs">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
 
-    <!-- Theme Switcher -->
     <div class="fab-container">
         <button id="theme-toggle" class="fab tonal-fab" title="Toggle Dark/Light Mode">
             <span class="material-symbols-outlined" id="theme-icon">light_mode</span>
@@ -30,7 +29,6 @@
         </button>
     </div>
 
-    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
             <img src="Assets/logo.png" alt="Logo" class="logo">
@@ -42,7 +40,6 @@
         </div>
     </nav>
 
-    <!-- Homepage Section -->
     <section class="homepage section-container" id="home">
         <div class="hero-card">
             <h1 class="header1">chizz.ui</h1>
@@ -58,38 +55,35 @@
         </div>
     </section>
 
-    <!-- Works Section -->
     <section class="works section-container" id="works">
-        <!-- Poster Design -->
         <h2 class="section-title">Poster Design</h2>
         <div class="gallery-grid">
-            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DIATJgmTR5A/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+            <div class="gallery-card elevated-card" data-href="https://www.instagram.com/p/DIATJgmTR5A/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
                 <img src="Assets/Poster/poster1.webp" alt="Poster 1">
             </div>
-            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DHA6sUEzA-r/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+            <div class="gallery-card elevated-card" data-href="https://www.instagram.com/p/DHA6sUEzA-r/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
                 <img src="Assets/Poster/poster2.webp" alt="Poster 2">
             </div>
-            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DJMTrq9zUdq/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+            <div class="gallery-card elevated-card" data-href="https://www.instagram.com/p/DJMTrq9zUdq/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
                 <img src="Assets/Poster/poster3.webp" alt="Poster 3">
             </div>
-            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DI8359JzzZO/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+            <div class="gallery-card elevated-card" data-href="https://www.instagram.com/p/DI8359JzzZO/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
                 <img src="Assets/Poster/poster4.webp" alt="Poster 4">
             </div>
-            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DGPUvpWzdsJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+            <div class="gallery-card elevated-card" data-href="https://www.instagram.com/p/DGPUvpWzdsJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
                 <img src="Assets/Poster/poster5.webp" alt="Poster 5">
             </div>
-            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DF9FMJyT4Ua/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+            <div class="gallery-card elevated-card" data-href="https://www.instagram.com/p/DF9FMJyT4Ua/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
                 <img src="Assets/Poster/poster6.webp" alt="Poster 6">
             </div>
-            <div class="gallery-card elevated-card" onclick="window.open('https://www.instagram.com/p/DGznEsGxW2n/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', '_blank');">
+            <div class="gallery-card elevated-card" data-href="https://www.instagram.com/p/DGznEsGxW2n/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
                 <img src="Assets/Poster/poster7.webp" alt="Poster 7">
             </div>
-            <div class="gallery-card elevated-card" onclick="window.open('https://www.facebook.com/share/p/19CBXvKZwx/', '_blank');">
+            <div class="gallery-card elevated-card" data-href="https://www.facebook.com/share/p/19CBXvKZwx/">
                 <img src="Assets/Poster/poster8.webp" alt="Poster 8">
             </div>
         </div>
 
-        <!-- Other Design -->
         <h2 class="section-title">Other Design</h2>
         <div class="gallery-grid other-gallery">
             <div class="gallery-card elevated-card">
@@ -113,7 +107,6 @@
         </div>
     </section>     
 
-    <!-- Contact -->
     <section class="contact section-container" id="contact">
         <div class="contact-grid">
             <div class="contact-card primary-container-card">
@@ -125,19 +118,19 @@
                 
                 <h3 class="socials-title">Platforms</h3>
                 <div class="social-chips">
-                    <a onclick="window.open('https://web.facebook.com/AmagiriYuki01/', '_blank');" class="social-chip">
+                    <a href="https://web.facebook.com/AmagiriYuki01/" target="_blank" rel="noopener noreferrer" class="social-chip">
                         <img src="Assets/Icon/fb.svg" alt="Facebook" class="icon-svg">
                         <span>Akamiya Chizui</span>
                     </a>
-                    <a onclick="window.open('https://instagram.com/chizz.ui/', '_blank');" class="social-chip">
+                    <a href="https://instagram.com/chizz.ui/" target="_blank" rel="noopener noreferrer" class="social-chip">
                         <img src="Assets/Icon/ig.svg" alt="Instagram" class="icon-svg">
                         <span>@chizz.ui</span>
                     </a>
-                    <a onclick="window.open('https://vgen.co/ChizzUI/portfolio', '_blank');" class="social-chip">
+                    <a href="https://vgen.co/ChizzUI/portfolio" target="_blank" rel="noopener noreferrer" class="social-chip">
                         <img src="Assets/Icon/vgen.svg" alt="Vgen" class="icon-svg">
                         <span>@ChizzUI</span>
                     </a>  
-                    <a onclick="window.open('https://github.com/Chizuui', '_blank');" class="social-chip">
+                    <a href="https://github.com/Chizuui" target="_blank" rel="noopener noreferrer" class="social-chip">
                         <img src="Assets/Icon/github.svg" alt="Github" class="icon-svg">
                         <span>Github</span>
                     </a>
