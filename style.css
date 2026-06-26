@@ -90,7 +90,7 @@ body {
     top: -20vh;
     left: -20vw;
     animation: blobMove1 12s infinite alternate ease-in-out;
-    opacity: 0.8;
+    opacity: 0.5;
 }
 
 .blob-2 {
@@ -100,7 +100,7 @@ body {
     bottom: -20vh;
     right: -20vw;
     animation: blobMove2 15s infinite alternate ease-in-out;
-    opacity: 0.8;
+    opacity: 0.5;
 }
 
 .blob-3 {
@@ -110,16 +110,16 @@ body {
     top: 40vh;
     left: 20vw;
     animation: blobMove3 18s infinite alternate ease-in-out;
-    opacity: 0.6;
+    opacity: 0.3;
 }
 
 .theme-dark .blob-1, .theme-dark .blob-2 {
-    opacity: 0.3; 
+    opacity: 0.2; 
 }
 
 .theme-dark .blob-3 {
     background: radial-gradient(circle, hsl(calc(var(--m3-hue) + 50), 60%, 30%) 0%, transparent 60%);
-    opacity: 0.4;
+    opacity: 0.2;
 }
 
 /* GPU translated animations */
@@ -296,7 +296,7 @@ body {
     font-weight: 700;
     color: var(--sys-color-primary);
     letter-spacing: -2px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
     line-height: 1.1;
     text-align: center;
     transition: color var(--anim-standard);
@@ -306,7 +306,7 @@ body {
     font-size: clamp(1rem, 1.25vw, 1.2rem);
     line-height: 1.6;
     max-width: 600px;
-    margin: 0 auto 2rem;
+    margin: 0 auto 32px;
     text-align: center;
     color: var(--sys-color-on-surface-variant);
 }
@@ -320,22 +320,49 @@ body {
     font-weight: 600;
 }
 
-/* Tag Chips */
-.tags-container {
+/* Call To Action */
+.cta-container {
     display: flex;
-    gap: 0.5rem;
     justify-content: center;
-    flex-wrap: wrap;
+    margin-top: 16px;
 }
 
-.tonal-chip {
-    padding: 0.75rem 1.5rem;
+.primary-button {
+    background-color: var(--sys-color-primary);
+    color: var(--sys-color-on-primary);
+    padding: 12px 32px;
     border-radius: var(--border-radius-pill);
-    background-color: var(--sys-color-secondary-container);
-    color: var(--sys-color-on-secondary-container);
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: background-color var(--anim-standard);
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    box-shadow: var(--elevation-1);
+    transition: transform var(--anim-standard), box-shadow var(--anim-standard), filter var(--anim-standard);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    min-width: 160px;
+}
+
+.primary-button:hover {
+    transform: scale(1.05);
+    box-shadow: var(--elevation-2);
+    filter: brightness(1.1);
+}
+
+.primary-button:active {
+    transform: scale(0.95);
+}
+
+/* Accessibility */
+*:focus-visible {
+    outline: 3px solid var(--sys-color-primary);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.primary-button:focus-visible, .nav-chip:focus-visible, .fab:focus-visible, .social-chip:focus-visible {
+    border-radius: var(--border-radius-pill);
 }
 
 /* Works Gallery Grid */
@@ -561,22 +588,25 @@ body {
     /* adjustments for mobile device */
     .header1 {
         font-size: clamp(3rem, 15vw, 4.5rem);
-        margin-bottom: 1rem;
+        margin-bottom: 16px;
     }
 
     .paragraph {
-        font-size: 1rem;
-        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+        margin-bottom: 24px;
         padding: 0 1rem;
+        line-height: 1.6;
     }
 
-    .tags-container {
-        gap: 0.4rem;
+    .cta-container {
+        margin-top: 16px;
     }
 
-    .tonal-chip {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.8rem;
+    .primary-button {
+        width: 100%;
+        max-width: 300px;
+        min-height: 56px;
+        font-size: 1.1rem;
     }
 
     .section-container {
