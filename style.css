@@ -152,19 +152,21 @@ body {
 .fab {
     width: 56px;
     height: 56px;
-    border-radius: var(--border-radius-large);
+    border-radius: var(--border-radius-pill);
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     box-shadow: var(--elevation-1);
-    transition: transform var(--anim-standard), background-color var(--anim-standard), box-shadow var(--anim-standard);
+    transition: transform var(--anim-standard), background-color var(--anim-standard), box-shadow var(--anim-standard), color var(--anim-standard);
 }
 
 .fab:hover {
     transform: scale(1.05);
     box-shadow: var(--elevation-2);
+    background-color: var(--sys-color-on-surface);
+    color: var(--sys-color-surface);
 }
 
 .fab:active {
@@ -357,13 +359,16 @@ body {
 }
 
 /* Accessibility */
-*:focus-visible {
+*:focus, *:focus-visible {
     outline: 3px solid var(--sys-color-primary);
     outline-offset: 4px;
     border-radius: 4px;
 }
 
-.primary-button:focus-visible, .nav-chip:focus-visible, .fab:focus-visible, .social-chip:focus-visible {
+.primary-button:focus, .primary-button:focus-visible, 
+.nav-chip:focus, .nav-chip:focus-visible, 
+.fab:focus, .fab:focus-visible, 
+.social-chip:focus, .social-chip:focus-visible {
     border-radius: var(--border-radius-pill);
 }
 
@@ -591,12 +596,13 @@ body {
     .header1 {
         font-size: clamp(3rem, 15vw, 4.5rem);
         margin-bottom: 24px;
+        padding: 0 1rem;
     }
 
     .paragraph {
         font-size: 1.15rem;
         margin-bottom: 32px;
-        padding: 0 1rem;
+        padding: 0 2rem;
         line-height: 1.6;
     }
 
