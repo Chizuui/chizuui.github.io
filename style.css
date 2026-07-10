@@ -54,25 +54,24 @@ h1, h2, .brand, .operation-label {
 .glow-blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
     z-index: -8;
     pointer-events: none;
-    opacity: 0.08;
+    will-change: transform;
 }
 
 .blob-1 {
-    width: 30vw;
-    height: 30vw;
-    background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+    width: 35vw;
+    height: 35vw;
+    background: radial-gradient(circle, rgba(255, 149, 0, 0.12) 0%, rgba(255, 149, 0, 0.04) 40%, transparent 70%);
     top: -5vh;
     left: -5vw;
     animation: float-blob-1 25s infinite alternate ease-in-out;
 }
 
 .blob-2 {
-    width: 25vw;
-    height: 25vw;
-    background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+    width: 30vw;
+    height: 30vw;
+    background: radial-gradient(circle, rgba(255, 59, 59, 0.12) 0%, rgba(255, 59, 59, 0.04) 40%, transparent 70%);
     bottom: -5vh;
     right: -5vw;
     animation: float-blob-2 30s infinite alternate ease-in-out;
@@ -98,6 +97,7 @@ h1, h2, .brand, .operation-label {
     linear-gradient(90deg, rgba(255, 59, 59, 0.15) 1px, transparent 1px);
   background-size: 72px 72px;
   animation: grid-drift 12s linear infinite;
+  will-change: transform;
 }
 
 .blueprint-bg::after {
@@ -235,6 +235,7 @@ h1, h2, .brand, .operation-label {
     color: var(--primary);
     transform-origin: 500px 500px; /* aligns with viewBox 0 0 1000 1000 center */
     animation: rotate-geom 150s linear infinite;
+    will-change: transform;
 }
 
 @keyframes rotate-geom {
@@ -313,16 +314,18 @@ h1, h2, .brand, .operation-label {
     pointer-events: none;
     z-index: -4;
     transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
 }
 .wrap-1 { top: 20%; right: 15%; }
 .wrap-2 { bottom: 30%; left: 25%; }
 .wrap-3 { top: 60%; right: 5%; }
 
 .shard {
-    background: linear-gradient(135deg, rgba(255, 149, 0, 0.12), rgba(255, 59, 59, 0.08));
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 59, 59, 0.25);
+    background: linear-gradient(135deg, rgba(255, 149, 0, 0.08), rgba(255, 59, 59, 0.04));
+    backdrop-filter: none;
+    border: 1px solid rgba(255, 59, 59, 0.2);
     animation: float-shard 8s ease-in-out infinite alternate;
+    will-change: translate;
 }
 .shard-1 {
     width: 150px;
