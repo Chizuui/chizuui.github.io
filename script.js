@@ -46,14 +46,124 @@ document.addEventListener('DOMContentLoaded', function() {
         }, intervalTime);
     }
 
-    /* ==== Navigation Links Observer ==== */
+    /* ==== Floating Particles Canvas ==== */
+    const canvas = document.getElementById('particles-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let W, H, particles;
+
+        const PARTICLE_COUNT = 110;
+        const CONNECTION_DIST = 130;
+
+        const COLORS = [
+            'rgba(255, 59, 59, 0.55)',
+            'rgba(255, 59, 59, 0.35)',
+            'rgba(200, 80, 80, 0.3)',
+            'rgba(180, 100, 100, 0.2)',
+            'rgba(26, 21, 21, 0.2)',
+            'rgba(26, 21, 21, 0.1)',
+        ];
+
+        function randomBetween(a, b) {
+            return a + Math.random() * (b - a);
+        }
+
+        function createParticle(isAccent = false) {
+            return {
+                x: randomBetween(0, W || window.innerWidth),
+                y: randomBetween(0, H || window.innerHeight),
+                r: isAccent ? randomBetween(2.5, 4.5) : randomBetween(0.7, 2.2),
+                vx: randomBetween(-0.2, 0.2),
+                vy: randomBetween(-0.28, -0.05),
+                color: COLORS[Math.floor(Math.random() * COLORS.length)],
+                wobble: randomBetween(0, Math.PI * 2),
+                wobbleSpeed: randomBetween(0.003, 0.01),
+                wobbleAmt: randomBetween(0.08, 0.4),
+                isAccent,
+            };
+        }
+
+        function resize() {
+            W = canvas.width = canvas.offsetWidth;
+            H = canvas.height = canvas.offsetHeight;
+        }
+
+        function init() {
+            resize();
+            // Mix of regular + 12 accent particles
+            particles = [
+                ...Array.from({ length: PARTICLE_COUNT - 12 }, () => createParticle(false)),
+                ...Array.from({ length: 12 }, () => createParticle(true)),
+            ];
+        }
+
+        function tick() {
+            ctx.clearRect(0, 0, W, H);
+
+            // Draw connection lines first (behind particles)
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < CONNECTION_DIST) {
+                        const alpha = (1 - dist / CONNECTION_DIST) * 0.12;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(255, 59, 59, ${alpha})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw particles
+            for (const p of particles) {
+                p.wobble += p.wobbleSpeed;
+                p.x += p.vx + Math.sin(p.wobble) * p.wobbleAmt;
+                p.y += p.vy;
+
+                // Wrap around
+                if (p.y < -10) p.y = H + 10;
+                if (p.x < -10) p.x = W + 10;
+                if (p.x > W + 10) p.x = -10;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+            }
+
+            requestAnimationFrame(tick);
+        }
+
+        window.addEventListener('resize', resize);
+
+        init();
+        tick();
+    }
+
+    /* ==== Navigation Links Observer & Line Sidebar ==== */
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-chip');
+
+    function updateSidebarIndicator(activeLink) {
+        const indicator = document.getElementById('nav-indicator');
+        if (!indicator || !activeLink) return;
+        const index = activeLink.getAttribute('data-index');
+        if (window.innerWidth > 1024) {
+            indicator.style.transform = `translateY(${index * 40}px)`;
+        } else {
+            indicator.style.transform = 'none';
+        }
+    }
 
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
             navLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
+            updateSidebarIndicator(this);
         });
     });
 
@@ -71,12 +181,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 const activeLink = document.querySelector(`.nav-chip[href="#${id}"]`);
                 if (activeLink) {
                     activeLink.classList.add('active');
+                    updateSidebarIndicator(activeLink);
                 }
             }
         });
     }, observerOptions);
 
     sections.forEach(section => observer.observe(section));
+
+    // Initialize indicator on load
+    const initialActive = document.querySelector('.nav-chip.active');
+    if (initialActive) {
+        updateSidebarIndicator(initialActive);
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        const activeLink = document.querySelector('.nav-chip.active');
+        if (activeLink) {
+            updateSidebarIndicator(activeLink);
+        }
+    });
 
     /* ==== Fade Up Scroll Animations ==== */
     const fadeElements = document.querySelectorAll('.animate-me');
@@ -98,38 +223,14 @@ document.addEventListener('DOMContentLoaded', function() {
     fadeElements.forEach((el, index) => {
         el.classList.add('animate-on-scroll');
         if(el.classList.contains('operation-node')) {
-            el.style.transitionDelay = `${(index % 4) * 0.1}s`;
+            const delay = `${(index % 4) * 0.15}s`;
+            el.style.setProperty('--delay', delay);
+            el.style.transitionDelay = delay;
         }
         fadeObserver.observe(el);
     });
 
-    /* ==== Cursor Parallax for Background ==== */
-    const blueprintBg = document.querySelector('.blueprint-bg');
-    if (blueprintBg) {
-        document.addEventListener('mousemove', function(e) {
-            const mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-            const mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
 
-            // Move shard wraps
-            const wraps = document.querySelectorAll('.shard-wrap');
-            wraps.forEach((wrap, index) => {
-                const speed = (index + 1) * 15;
-                wrap.style.transform = `translate(${mouseX * speed}px, ${mouseY * speed}px)`;
-            });
-
-            // Move silhouette
-            const silhouette = document.querySelector('.silhouette');
-            if (silhouette) {
-                silhouette.style.transform = `translate(${mouseX * -20}px, ${mouseY * -20}px)`;
-            }
-
-            // Move axis lines slightly
-            const axisX = document.querySelector('.axis-x');
-            const axisY = document.querySelector('.axis-y');
-            if (axisX) axisX.style.transform = `translateY(${mouseY * 10}px)`;
-            if (axisY) axisY.style.transform = `translateX(${mouseX * 10}px)`;
-        });
-    }
 
     /* ==== Context Menu Disable ==== */
     document.addEventListener('contextmenu', function (e) {

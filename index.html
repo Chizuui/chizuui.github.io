@@ -7,7 +7,7 @@
     <title>Chizui | Portofolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&family=Merriweather:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0" />
     <script src="script.js" defer></script>
 </head>
@@ -58,54 +58,72 @@
         <div class="shard-wrap wrap-2"><div class="shard shard-2"></div></div>
         <div class="shard-wrap wrap-3"><div class="shard shard-3"></div></div>
 
-        <!-- Crosshairs -->
-        <div class="crosshair" style="top: 20%; left: 80%;">+<span>SYS-01</span></div>
-        <div class="crosshair" style="top: 70%; left: 10%;">+<span>MT-2</span></div>
-        <div class="crosshair" style="top: 40%; left: 40%;">+<span>COORD-X</span></div>
+        <!-- Floating Particles -->
+        <canvas id="particles-canvas"></canvas>
 
-        <!-- Live Telemetry -->
-        <div class="live-telemetry">
-            <div>LOC: <span id="telemetry-coord">X: 124.52 Y: 892.12</span></div>
-            <div>SYS_LOAD: <span id="telemetry-load">42.8%</span></div>
-            <div>FLOW_RATE: <span id="telemetry-flow">1.04 GB/S</span></div>
-        </div>
-
-        <svg class="silhouette" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-            <!-- Abstract Architecture/Mecha silhouette -->
-            <path d="M 200 600 L 200 400 L 250 350 L 300 350 L 320 200 L 380 150 L 450 150 L 480 250 L 550 250 L 600 400 L 650 400 L 700 600 Z" fill="currentColor" stroke="none" />
-            <path d="M 320 300 L 350 250 L 450 250 L 480 320 Z" fill="none" stroke="currentColor" stroke-width="4" />
-            <circle cx="400" cy="200" r="20" fill="none" stroke="currentColor" stroke-width="4" />
-            
-            <!-- Extra details -->
-            <path d="M 100 600 L 100 500 L 150 450 L 150 600 Z" fill="currentColor" opacity="0.5" />
-            <path d="M 700 600 L 700 450 L 750 400 L 750 600 Z" fill="currentColor" opacity="0.5" />
-            <line x1="0" y1="350" x2="800" y2="350" stroke="currentColor" stroke-width="1" stroke-dasharray="10 5" opacity="0.3" />
-        </svg>
     </div>
 
-    <nav class="navbar">
+
+    <!-- Fixed Brand Header (Desktop) -->
+    <div class="brand-header">
         <div class="nav-brand">chizz.ui</div>
-        <div class="nav-chips">
-            <a href="#home" class="nav-chip active">Home</a>
-            <a href="#works" class="nav-chip">Works</a>
-            <a href="#contact" class="nav-chip">Contact</a>
+    </div>
+
+    <!-- Vertical Line Sidebar (ReactBits Style) -->
+    <nav class="line-sidebar">
+        <div class="sidebar-logo">chizz.ui</div>
+        <div class="sidebar-nav">
+            <div class="sidebar-line">
+                <div class="sidebar-indicator" id="nav-indicator"></div>
+            </div>
+            <div class="nav-links-container">
+                <a href="#home" class="nav-chip active" data-index="0">Home</a>
+                <a href="#works" class="nav-chip" data-index="1">Works</a>
+                <a href="#contact" class="nav-chip" data-index="2">Contact</a>
+            </div>
         </div>
     </nav>
 
     <section class="hero-section section-container" id="home">
-        <div class="hero-card animate-me">
-            <div class="hero-label tech-label">
-                <span>ID: CHIZZ.UI</span>
-                <span>STATUS: ONLINE</span>
+        <div class="editorial-hero animate-me">
+            <!-- Top bar: role tags -->
+            <div class="ed-tags">
+                <span class="ed-tag">UI Design</span>
+                <span class="ed-tag">Graphic Design</span>
+                <span class="ed-tag">Web Development</span>
             </div>
-            <h1 class="header1">AKAMIYA<br>CHIZUI</h1>
-            <p class="subtitle">
-                Hi, I'm Desca, also known as Chizui. I design intuitive UI and build functional websites with a technical approach.
-            </p>
-            <a href="#works" class="tech-btn">
-                <span class="material-symbols-outlined">explore</span>
-                EXPLORE
-            </a>
+
+            <!-- Main body: name + side column -->
+            <div class="ed-body">
+                <h1 class="ed-name">Akamiya<br>Chizui</h1>
+                <div class="ed-side">
+                    <p class="ed-desc">
+                        Hi, I'm Desca — a designer and developer who Like to making something.
+                        I take commissions for UI, graphic work, and web.
+                    </p>
+                    <div class="ed-meta">
+                        <div class="ed-meta-item">
+                            <span class="ed-meta-label">Based in</span>
+                            <span class="ed-meta-value">Indonesia</span>
+                        </div>
+                        <div class="ed-meta-item">
+                            <span class="ed-meta-label">Status</span>
+                            <span class="ed-meta-value ed-open">Open for work</span>
+                        </div>
+                        <div class="ed-meta-item">
+                            <span class="ed-meta-label">Platform</span>
+                            <span class="ed-meta-value">VGen, Insta, Facebook</span>
+                        </div>
+                    </div>
+                    <a href="#works" class="ed-cta">See my work →</a>
+                </div>
+            </div>
+
+            <!-- Bottom divider bar -->
+            <div class="ed-footer">
+                <span>Portfolio &amp; Commissions</span>
+                <span>2024 — 2025</span>
+            </div>
         </div>
     </section>
 
@@ -297,7 +315,7 @@
                         keju@chizui.dev
                     </a>
                     
-                    <a href="https://web.facebook.com/AmagiriYuki01/" target="_blank" rel="noopener noreferrer" class="terminal-link">
+                    <a href="https://web.facebook.com/kejukeiki/" target="_blank" rel="noopener noreferrer" class="terminal-link">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                         Akamiya Chizui
                     </a>
