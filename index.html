@@ -3,362 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css?v=2.0.2">
     <title>Chizui | Portfolio</title>
+
+    <meta name="description" content="Akamiya Chizui (Desca) — designer and developer in Indonesia. Open for UI, graphic, and web commissions.">
+    <link rel="canonical" href="https://chizui.dev/">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#fdfaf9">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="chizz.ui">
+    <meta property="og:url" content="https://chizui.dev/">
+    <meta property="og:title" content="Chizui | Portfolio">
+    <meta property="og:description" content="Akamiya Chizui (Desca) — designer and developer in Indonesia. Open for UI, graphic, and web commissions.">
+    <!-- og:image intentionally omitted until a 1200x630 opaque cover exists.
+         A missing image degrades to a clean text card; a wrong-shaped one renders as a blank box. -->
+    <meta name="twitter:card" content="summary">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&family=Merriweather:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0" />
-    <script src="script.js?v=2.0.2" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=2.1.0">
+    <script src="script.js?v=2.1.0" defer></script>
 </head>
 <body>
-    <div class="system-boot" id="boot-screen">
-        <div class="boot-container">
-            <div class="boot-title">SYSTEM INITIALIZING</div>
-            <div class="progress-bar-wrap">
-                <div class="progress-bar" id="boot-progress"></div>
-            </div>
-            <div class="boot-status" id="boot-status">> LOADING CORES...</div>
-        </div>
-    </div>
-    <div class="blueprint-bg" aria-hidden="true">
-        <!-- Floating Ambient Glow Blobs -->
-        <div class="glow-blob blob-1"></div>
-        <div class="glow-blob blob-2"></div>
+    <!-- Warm gradient + 72px drafting grid + paper grain. All three are static. -->
+    <div class="blueprint-bg" aria-hidden="true"></div>
 
-        <div class="axis-x"></div>
-        <div class="axis-y"></div>
+    <header class="brand-header">
+        <p class="nav-brand">chizz.ui</p>
+    </header>
 
-        <!-- Tech Geometry Overlay (Golden Ratio & Radar HUD) -->
-        <svg class="tech-geometry" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-            <!-- Golden Spiral -->
-            <path class="golden-spiral" d="M 500 500 A 34 34 0 0 1 500 466 A 55 55 0 0 1 555 500 A 89 89 0 0 1 500 589 A 144 144 0 0 1 356 500 A 233 233 0 0 1 500 267 A 377 377 0 0 1 877 500 A 610 610 0 0 1 500 1110" fill="none" stroke="currentColor" stroke-width="0.75" opacity="0.15" />
-            <!-- Concentric HUD Grids -->
-            <circle cx="500" cy="500" r="144" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="3 6" opacity="0.2" />
-            <circle cx="500" cy="500" r="233" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.1" />
-            <circle cx="500" cy="500" r="377" fill="none" stroke="currentColor" stroke-width="0.75" stroke-dasharray="20 5 5 5" opacity="0.15" />
-            <!-- Angle Markings -->
-            <line x1="500" y1="500" x2="800" y2="200" stroke="currentColor" stroke-width="0.5" stroke-dasharray="5 5" opacity="0.2" />
-            <path d="M 580 420 A 113 113 0 0 0 500 387" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3" />
-            <text x="590" y="415" font-family="IBM Plex Mono" font-size="10" fill="currentColor" opacity="0.4">45.00°</text>
-            <!-- Crosshairs -->
-            <line x1="123" y1="500" x2="877" y2="500" stroke="currentColor" stroke-width="0.5" opacity="0.08" />
-            <line x1="500" y1="123" x2="500" y2="877" stroke="currentColor" stroke-width="0.5" opacity="0.08" />
-        </svg>
-
-        <!-- Map Routes & Nodes -->
-        <svg class="map-routes" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <polyline points="0,80 20,60 50,60 70,30 100,30" fill="none" stroke="rgba(255, 59, 59, 0.2)" stroke-width="0.2" stroke-dasharray="1 1" />
-            <polyline points="20,100 20,80 40,50 60,50 90,10" fill="none" stroke="rgba(255, 59, 59, 0.15)" stroke-width="0.1" />
-        </svg>
-
-        <!-- Floating Shards -->
-        <div class="shard-wrap wrap-1"><div class="shard shard-1"></div></div>
-        <div class="shard-wrap wrap-2"><div class="shard shard-2"></div></div>
-        <div class="shard-wrap wrap-3"><div class="shard shard-3"></div></div>
-
-        <!-- Floating Particles -->
-        <canvas id="particles-canvas"></canvas>
-
-    </div>
-
-
-    <!-- Fixed Brand Header (Desktop) -->
-    <div class="brand-header">
-        <div class="nav-brand">chizz.ui</div>
-    </div>
-
-    <!-- Vertical Line Sidebar (ReactBits Style) -->
-    <nav class="line-sidebar">
-        <div class="sidebar-logo">chizz.ui</div>
+    <nav class="line-sidebar" aria-label="Primary">
+        <p class="sidebar-logo">chizz.ui</p>
         <div class="sidebar-nav">
             <div class="sidebar-line">
                 <div class="sidebar-indicator" id="nav-indicator"></div>
             </div>
             <div class="nav-links-container">
-                <a href="#home" class="nav-chip active" data-index="0">Home</a>
-                <a href="#works" class="nav-chip" data-index="1">Works</a>
-                <a href="#contact" class="nav-chip" data-index="2">Contact</a>
+                <a href="#home" class="nav-chip active" aria-current="true">Home</a>
+                <a href="#works" class="nav-chip">Posters</a>
+                <a href="#other" class="nav-chip">Other</a>
+                <a href="#contact" class="nav-chip">Contact</a>
             </div>
         </div>
     </nav>
 
-    <section class="hero-section section-container" id="home">
-        <div class="editorial-hero animate-me">
-            <!-- Main body: name + side column -->
-            <div class="ed-body">
-                <h1 class="ed-name">Akamiya<br>Chizui</h1>
-                <div class="ed-side">
-                    <p class="ed-desc">
-                        Hi, I'm Desca — a designer and developer who likes to make things.
-                        I take commissions for UI, graphic work, and web.
-                    </p>
-                    <div class="ed-meta">
-                        <div class="ed-meta-item">
-                            <span class="ed-meta-label">Based in</span>
-                            <span class="ed-meta-value">Indonesia</span>
+    <main>
+        <section class="hero-section section-container" id="home" aria-labelledby="ed-name">
+            <div class="editorial-hero">
+                <div class="ed-body">
+                    <h1 class="ed-name" id="ed-name">Akamiya<br>Chizui</h1>
+                    <div class="ed-side">
+                        <p class="ed-desc">
+                            Hi, I'm Desca — a designer and developer who likes to make things.
+                            I take commissions for UI, graphic work, and web.
+                        </p>
+                        <div class="ed-meta">
+                            <div class="ed-meta-item">
+                                <span class="ed-meta-label">Based in</span>
+                                <span class="ed-meta-value">Indonesia</span>
+                            </div>
+                            <div class="ed-meta-item">
+                                <span class="ed-meta-label">Status</span>
+                                <span class="ed-meta-value ed-open">Open for work</span>
+                            </div>
+                            <div class="ed-meta-item">
+                                <span class="ed-meta-label">Platform</span>
+                                <span class="ed-meta-value">VGen, Insta, Facebook</span>
+                            </div>
                         </div>
-                        <div class="ed-meta-item">
-                            <span class="ed-meta-label">Status</span>
-                            <span class="ed-meta-value ed-open">Open for work</span>
-                        </div>
-                        <div class="ed-meta-item">
-                            <span class="ed-meta-label">Platform</span>
-                            <span class="ed-meta-value">VGen, Insta, Facebook</span>
-                        </div>
+                        <a href="#works" class="ed-cta">See my work →</a>
                     </div>
-                    <a href="#works" class="ed-cta">See my work →</a>
                 </div>
+
+                <div class="ed-footer">
+                    <span>Portfolio &amp; Commissions</span>
+                    <span>2024 — 2025</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="works-posters section-container" id="works" aria-labelledby="title-posters">
+            <div class="section-head">
+                <h2 class="section-title" id="title-posters">Poster Design</h2>
+                <p class="section-count">8 works</p>
             </div>
 
-            <!-- Bottom divider bar -->
-            <div class="ed-footer">
-                <span>Portfolio &amp; Commissions</span>
-                <span>2024 — 2025</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="works section-container" id="works">
-        <h2 class="section-title animate-me"><span class="tech-label">01.</span> Poster Design</h2>
-        <div class="gallery-grid">
-            <div class="operation-node animate-me" data-href="https://www.instagram.com/p/DIATJgmTR5A/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>POSTER</b>
-                        <strong>POST-01</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Poster/poster1.webp" alt="Poster 1">
-                </div>
-            </div>
-            <div class="operation-node animate-me" data-href="https://www.instagram.com/p/DHA6sUEzA-r/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>POSTER</b>
-                        <strong>POST-02</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Poster/poster2.webp" alt="Poster 2">
-                </div>
-            </div>
-            <div class="operation-node animate-me" data-href="https://www.instagram.com/p/DJMTrq9zUdq/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>POSTER</b>
-                        <strong>POST-03</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Poster/poster3.webp" alt="Poster 3">
-                </div>
-            </div>
-            <div class="operation-node animate-me" data-href="https://www.instagram.com/p/DI8359JzzZO/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>POSTER</b>
-                        <strong>POST-04</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Poster/poster4.webp" alt="Poster 4">
-                </div>
-            </div>
-            <div class="operation-node animate-me" data-href="https://www.instagram.com/p/DGPUvpWzdsJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>POSTER</b>
-                        <strong>POST-05</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Poster/poster5.webp" alt="Poster 5">
-                </div>
-            </div>
-            <div class="operation-node animate-me" data-href="https://www.instagram.com/p/DF9FMJyT4Ua/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>POSTER</b>
-                        <strong>POST-06</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Poster/poster6.webp" alt="Poster 6">
-                </div>
-            </div>
-            <div class="operation-node animate-me" data-href="https://www.instagram.com/p/DGznEsGxW2n/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>POSTER</b>
-                        <strong>POST-07</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Poster/poster7.webp" alt="Poster 7">
-                </div>
-            </div>
-            <div class="operation-node animate-me" data-href="https://www.facebook.com/share/p/19CBXvKZwx/">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>POSTER</b>
-                        <strong>POST-08</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Poster/poster8.webp" alt="Poster 8">
-                </div>
-            </div>
-        </div>
-
-        <h2 class="section-title animate-me"><span class="tech-label">02.</span> Other Design</h2>
-        <div class="gallery-grid other-gallery">
-            <div class="operation-node animate-me">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>ARCHIVE</b>
-                        <strong>OTH-01</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Other/2.webp" alt="Other 2">
-                </div>
-            </div>
-            <div class="operation-node animate-me">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>ARCHIVE</b>
-                        <strong>OTH-02</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Other/3.webp" alt="Other 3">
-                </div>
-            </div>
-            <div class="operation-node animate-me">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>ARCHIVE</b>
-                        <strong>OTH-03</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Other/4.webp" alt="Other 4">
-                </div>
-            </div>
-            <div class="operation-node animate-me">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>ARCHIVE</b>
-                        <strong>OTH-04</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Other/5.webp" alt="Other 5">
-                </div>
-            </div>
-            <div class="operation-node animate-me">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>ARCHIVE</b>
-                        <strong>OTH-05</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Other/6.webp" alt="Other 6">
-                </div>
-            </div>
-            <div class="operation-node animate-me">
-                <div class="node-header">
-                    <span class="node-core"></span>
-                    <span class="node-card">
-                        <b>ARCHIVE</b>
-                        <strong>OTH-06</strong>
-                    </span>
-                </div>
-                <div class="node-image">
-                    <img src="Assets/Other/7.webp" alt="Other 7">
-                </div>
-            </div>
-        </div>
-    </section>     
-
-    <section class="contact section-container" id="contact">
-        <div class="contact-panel animate-me">
-            <div class="contact-grid">
-                <div>
-                    <h3 class="panel-title">COMMUNICATION</h3>
-                    <a class="terminal-link" href="mailto:keju@chizui.dev">
-                        <span class="material-symbols-outlined">mail</span>
-                        keju@chizui.dev
+            <!-- Plate numbers come from a CSS counter, so inserting a poster renumbers the rest. -->
+            <ul class="gallery-grid gallery--posters" role="list">
+                <li>
+                    <a class="operation-node animate-me" href="https://www.instagram.com/p/DIATJgmTR5A/" target="_blank" rel="noopener noreferrer">
+                        <span class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Instagram</span>
+                        </span>
+                        <span class="node-image">
+                            <img src="Assets/Poster/poster1.webp" alt="Poster design, plate 01" width="2160" height="2700" loading="lazy" decoding="async">
+                        </span>
                     </a>
-                    
-                    <a href="https://web.facebook.com/kejukeiki/" target="_blank" rel="noopener noreferrer" class="terminal-link">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                        Akamiya Chizui
+                </li>
+                <li>
+                    <a class="operation-node animate-me" href="https://www.instagram.com/p/DHA6sUEzA-r/" target="_blank" rel="noopener noreferrer">
+                        <span class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Instagram</span>
+                        </span>
+                        <span class="node-image">
+                            <img src="Assets/Poster/poster2.webp" alt="Poster design, plate 02" width="2160" height="2700" loading="lazy" decoding="async">
+                        </span>
                     </a>
-                    <a href="https://instagram.com/chizz.ui/" target="_blank" rel="noopener noreferrer" class="terminal-link">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                        @chizz.ui
+                </li>
+                <li>
+                    <a class="operation-node animate-me" href="https://www.instagram.com/p/DJMTrq9zUdq/" target="_blank" rel="noopener noreferrer">
+                        <span class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Instagram</span>
+                        </span>
+                        <span class="node-image">
+                            <img src="Assets/Poster/poster3.webp" alt="Poster design, plate 03" width="2160" height="2700" loading="lazy" decoding="async">
+                        </span>
                     </a>
-                    <a href="https://vgen.co/ChizzUI/portfolio" target="_blank" rel="noopener noreferrer" class="terminal-link">
-                        <svg width="20" height="20" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M15.0188 7.53476C18.4405 4.45385 23.7119 4.73011 26.7928 8.15181L27.0405 8.42694C28.4499 9.954 29.7068 12.1583 29.6527 14.3321L29.6527 14.3315C29.6351 15.1011 29.4176 15.8877 28.9881 16.584L28.9059 16.7152C28.8606 16.7867 28.7977 16.8848 28.7185 17.0061C28.5603 17.248 28.3357 17.5839 28.0555 17.9829C27.5006 18.7729 26.7012 19.8475 25.7449 20.942C24.8071 22.0153 23.6107 23.2326 22.2478 24.2147C20.9659 25.1385 19.018 26.234 16.6735 26.234C14.3766 26.234 12.4059 25.1755 11.1012 24.3002C9.69402 23.3561 8.41251 22.1779 7.3833 21.1239C6.33573 20.0513 5.44163 18.9955 4.81472 18.2169C4.4986 17.8243 4.24392 17.4942 4.06461 17.257C3.97482 17.1383 3.90354 17.0424 3.85248 16.9731L3.76168 16.8488C2.32119 14.8469 2.7743 12.054 4.77822 10.612C6.78056 9.17118 9.57188 9.62628 11.0135 11.6278L11.014 11.6285L11.0467 11.6731C11.0769 11.7141 11.1257 11.7799 11.1916 11.867C11.3236 12.0415 11.5223 12.2995 11.7745 12.6126C11.9256 12.8003 12.0937 13.005 12.2759 13.2212C12.4046 11.1158 13.3274 9.05766 15.0188 7.53476Z" />
-                            <path d="M16.3169 9.04793C18.562 7.0264 22.0209 7.20767 24.0424 9.4528L24.3013 9.74033L24.3044 9.74376C25.4787 11.012 26.2005 12.5351 26.1665 13.6574L26.1664 13.6599C26.1601 13.9341 26.083 14.2108 25.9282 14.4619L25.9094 14.4921C25.8988 14.5091 25.8838 14.533 25.8646 14.5632C25.826 14.6242 25.7702 14.7113 25.6987 14.8207C25.5557 15.0395 25.3492 15.3486 25.0897 15.7179C24.5728 16.4538 23.8364 17.4427 22.9661 18.4387C22.1026 19.427 21.0687 20.467 19.9518 21.2718C18.864 22.0557 17.5143 22.7501 16.0535 22.7501C14.6095 22.7501 13.2205 22.0687 12.0783 21.3024C10.899 20.5113 9.77254 19.4852 8.81417 18.5039C7.84915 17.5157 7.01671 16.5336 6.42743 15.8018C6.13184 15.4347 5.89511 15.1277 5.73097 14.9107C5.64885 14.8021 5.58475 14.7158 5.5404 14.6556C5.51821 14.6255 5.50096 14.6019 5.48883 14.5853L5.4685 14.5572C5.32642 14.3333 5.23504 14.174 5.18637 13.8666C5.11436 13.4118 5.22672 12.8309 5.73339 12.3933C6.16365 12.0266 6.72663 11.96 7.09996 12.0533C7.57996 12.16 7.85933 12.4066 8.067 12.6856L8.06747 12.6862L8.06824 12.6873L8.07798 12.7007C8.08659 12.7125 8.10022 12.7312 8.11865 12.7562C8.15553 12.8063 8.21159 12.8817 8.28514 12.979C8.43233 13.1736 8.64901 13.4547 8.92168 13.7933C9.46893 14.4729 10.2325 15.3727 11.1053 16.2664C11.9847 17.1669 12.9378 18.0228 13.8624 18.6431C14.8237 19.288 15.5628 19.5477 16.0535 19.5477C16.4161 19.5477 16.8947 19.4034 17.4769 19.0666L17.8826 18.8319L17.5277 18.5257C17.4156 18.429 17.3083 18.3241 17.2065 18.211L15.912 16.7734C13.8905 14.5283 14.0718 11.0695 16.3169 9.04793ZM22.3879 13.9925C21.92 14.6524 21.2854 15.4953 20.5545 16.3317L20.5377 16.3509L20.3046 16.6171L18.2985 14.6379L18.2919 14.6306C17.4538 13.6998 17.5289 12.2658 18.4597 11.4278C19.3905 10.5897 20.8245 10.6648 21.6626 11.5956L21.9214 11.8831C22.1723 12.1618 22.387 12.4709 22.4936 12.8159C22.6035 13.1715 22.5928 13.5476 22.4206 13.9351L22.4071 13.9654L22.3879 13.9925Z" />
-                        </svg>
-                        @ChizzUI
-                    </a>  
-                    <a href="https://github.com/Chizuui" target="_blank" rel="noopener noreferrer" class="terminal-link">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                        Github
+                </li>
+                <li>
+                    <a class="operation-node animate-me" href="https://www.instagram.com/p/DI8359JzzZO/" target="_blank" rel="noopener noreferrer">
+                        <span class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Instagram</span>
+                        </span>
+                        <span class="node-image">
+                            <img src="Assets/Poster/poster4.webp" alt="Poster design, plate 04" width="2160" height="2700" loading="lazy" decoding="async">
+                        </span>
                     </a>
-                </div>
+                </li>
+                <li>
+                    <a class="operation-node animate-me" href="https://www.instagram.com/p/DGPUvpWzdsJ/" target="_blank" rel="noopener noreferrer">
+                        <span class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Instagram</span>
+                        </span>
+                        <span class="node-image">
+                            <img src="Assets/Poster/poster5.webp" alt="Poster design, plate 05" width="2160" height="2700" loading="lazy" decoding="async">
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a class="operation-node animate-me" href="https://www.instagram.com/p/DF9FMJyT4Ua/" target="_blank" rel="noopener noreferrer">
+                        <span class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Instagram</span>
+                        </span>
+                        <span class="node-image">
+                            <img src="Assets/Poster/poster6.webp" alt="Poster design, plate 06" width="2160" height="2700" loading="lazy" decoding="async">
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a class="operation-node animate-me" href="https://www.instagram.com/p/DGznEsGxW2n/" target="_blank" rel="noopener noreferrer">
+                        <span class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Instagram</span>
+                        </span>
+                        <span class="node-image">
+                            <img src="Assets/Poster/poster7.webp" alt="Poster design, plate 07" width="2160" height="2700" loading="lazy" decoding="async">
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a class="operation-node animate-me" href="https://www.facebook.com/share/p/19CBXvKZwx/" target="_blank" rel="noopener noreferrer">
+                        <span class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Facebook</span>
+                        </span>
+                        <span class="node-image">
+                            <img src="Assets/Poster/poster8.webp" alt="Poster design, plate 08" width="2160" height="2700" loading="lazy" decoding="async">
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </section>
 
-                <div>
-                    <h3 class="panel-title">AFFILIATION</h3>
-                    <div class="affil-item">
-                        <div>
-                            <strong>Oxure Studio</strong><br>
-                            <span style="color: var(--muted)">Graphic Designer</span>
+        <section class="works-other section-container" id="other" aria-labelledby="title-other">
+            <div class="section-head">
+                <h2 class="section-title" id="title-other">Other Design</h2>
+                <p class="section-count">6 works</p>
+            </div>
+
+            <!-- No destinations, so these are figures rather than links — no pointer, no lift, not focusable. -->
+            <ul class="gallery-grid gallery--other" role="list">
+                <li>
+                    <figure class="operation-node animate-me">
+                        <figcaption class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Archive</span>
+                        </figcaption>
+                        <div class="node-image">
+                            <img src="Assets/Other/2.webp" alt="Other design work, plate 01" width="3840" height="2160" loading="lazy" decoding="async">
                         </div>
-                        <span class="year">EST. 2024</span>
+                    </figure>
+                </li>
+                <li>
+                    <figure class="operation-node animate-me">
+                        <figcaption class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Archive</span>
+                        </figcaption>
+                        <div class="node-image">
+                            <img src="Assets/Other/3.webp" alt="Other design work, plate 02" width="3840" height="2160" loading="lazy" decoding="async">
+                        </div>
+                    </figure>
+                </li>
+                <li>
+                    <figure class="operation-node animate-me">
+                        <figcaption class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Archive</span>
+                        </figcaption>
+                        <div class="node-image">
+                            <img src="Assets/Other/4.webp" alt="Other design work, plate 03" width="2560" height="1440" loading="lazy" decoding="async">
+                        </div>
+                    </figure>
+                </li>
+                <li>
+                    <figure class="operation-node animate-me">
+                        <figcaption class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Archive</span>
+                        </figcaption>
+                        <div class="node-image">
+                            <img src="Assets/Other/5.webp" alt="Other design work, plate 04" width="1920" height="1080" loading="lazy" decoding="async">
+                        </div>
+                    </figure>
+                </li>
+                <li>
+                    <figure class="operation-node animate-me">
+                        <figcaption class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Archive</span>
+                        </figcaption>
+                        <div class="node-image">
+                            <img src="Assets/Other/6.webp" alt="Other design work, plate 05" width="960" height="540" loading="lazy" decoding="async">
+                        </div>
+                    </figure>
+                </li>
+                <li>
+                    <figure class="operation-node animate-me">
+                        <figcaption class="node-header">
+                            <span class="node-core" aria-hidden="true"></span>
+                            <span class="node-label">Archive</span>
+                        </figcaption>
+                        <div class="node-image">
+                            <img src="Assets/Other/7.webp" alt="Other design work, plate 06" width="2560" height="1440" loading="lazy" decoding="async">
+                        </div>
+                    </figure>
+                </li>
+            </ul>
+        </section>
+
+        <section class="contact section-container" id="contact" aria-labelledby="title-contact">
+            <div class="contact-panel">
+                <h2 class="panel-tab" id="title-contact">CONTACT</h2>
+                <div class="contact-grid">
+                    <div>
+                        <h3 class="panel-title">ELSEWHERE</h3>
+                        <a class="terminal-link" href="mailto:keju@chizui.dev">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                            keju@chizui.dev
+                        </a>
+                        <a href="https://web.facebook.com/kejukeiki/" target="_blank" rel="noopener noreferrer" class="terminal-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                            Akamiya Chizui
+                        </a>
+                        <a href="https://instagram.com/chizz.ui/" target="_blank" rel="noopener noreferrer" class="terminal-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                            @chizz.ui
+                        </a>
+                        <a href="https://vgen.co/ChizzUI/portfolio" target="_blank" rel="noopener noreferrer" class="terminal-link">
+                            <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+                                <path d="M15.0188 7.53476C18.4405 4.45385 23.7119 4.73011 26.7928 8.15181L27.0405 8.42694C28.4499 9.954 29.7068 12.1583 29.6527 14.3321L29.6527 14.3315C29.6351 15.1011 29.4176 15.8877 28.9881 16.584L28.9059 16.7152C28.8606 16.7867 28.7977 16.8848 28.7185 17.0061C28.5603 17.248 28.3357 17.5839 28.0555 17.9829C27.5006 18.7729 26.7012 19.8475 25.7449 20.942C24.8071 22.0153 23.6107 23.2326 22.2478 24.2147C20.9659 25.1385 19.018 26.234 16.6735 26.234C14.3766 26.234 12.4059 25.1755 11.1012 24.3002C9.69402 23.3561 8.41251 22.1779 7.3833 21.1239C6.33573 20.0513 5.44163 18.9955 4.81472 18.2169C4.4986 17.8243 4.24392 17.4942 4.06461 17.257C3.97482 17.1383 3.90354 17.0424 3.85248 16.9731L3.76168 16.8488C2.32119 14.8469 2.7743 12.054 4.77822 10.612C6.78056 9.17118 9.57188 9.62628 11.0135 11.6278L11.014 11.6285L11.0467 11.6731C11.0769 11.7141 11.1257 11.7799 11.1916 11.867C11.3236 12.0415 11.5223 12.2995 11.7745 12.6126C11.9256 12.8003 12.0937 13.005 12.2759 13.2212C12.4046 11.1158 13.3274 9.05766 15.0188 7.53476Z" />
+                                <path d="M16.3169 9.04793C18.562 7.0264 22.0209 7.20767 24.0424 9.4528L24.3013 9.74033L24.3044 9.74376C25.4787 11.012 26.2005 12.5351 26.1665 13.6574L26.1664 13.6599C26.1601 13.9341 26.083 14.2108 25.9282 14.4619L25.9094 14.4921C25.8988 14.5091 25.8838 14.533 25.8646 14.5632C25.826 14.6242 25.7702 14.7113 25.6987 14.8207C25.5557 15.0395 25.3492 15.3486 25.0897 15.7179C24.5728 16.4538 23.8364 17.4427 22.9661 18.4387C22.1026 19.427 21.0687 20.467 19.9518 21.2718C18.864 22.0557 17.5143 22.7501 16.0535 22.7501C14.6095 22.7501 13.2205 22.0687 12.0783 21.3024C10.899 20.5113 9.77254 19.4852 8.81417 18.5039C7.84915 17.5157 7.01671 16.5336 6.42743 15.8018C6.13184 15.4347 5.89511 15.1277 5.73097 14.9107C5.64885 14.8021 5.58475 14.7158 5.5404 14.6556C5.51821 14.6255 5.50096 14.6019 5.48883 14.5853L5.4685 14.5572C5.32642 14.3333 5.23504 14.174 5.18637 13.8666C5.11436 13.4118 5.22672 12.8309 5.73339 12.3933C6.16365 12.0266 6.72663 11.96 7.09996 12.0533C7.57996 12.16 7.85933 12.4066 8.067 12.6856L8.06747 12.6862L8.06824 12.6873L8.07798 12.7007C8.08659 12.7125 8.10022 12.7312 8.11865 12.7562C8.15553 12.8063 8.21159 12.8817 8.28514 12.979C8.43233 13.1736 8.64901 13.4547 8.92168 13.7933C9.46893 14.4729 10.2325 15.3727 11.1053 16.2664C11.9847 17.1669 12.9378 18.0228 13.8624 18.6431C14.8237 19.288 15.5628 19.5477 16.0535 19.5477C16.4161 19.5477 16.8947 19.4034 17.4769 19.0666L17.8826 18.8319L17.5277 18.5257C17.4156 18.429 17.3083 18.3241 17.2065 18.211L15.912 16.7734C13.8905 14.5283 14.0718 11.0695 16.3169 9.04793ZM22.3879 13.9925C21.92 14.6524 21.2854 15.4953 20.5545 16.3317L20.5377 16.3509L20.3046 16.6171L18.2985 14.6379L18.2919 14.6306C17.4538 13.6998 17.5289 12.2658 18.4597 11.4278C19.3905 10.5897 20.8245 10.6648 21.6626 11.5956L21.9214 11.8831C22.1723 12.1618 22.387 12.4709 22.4936 12.8159C22.6035 13.1715 22.5928 13.5476 22.4206 13.9351L22.4071 13.9654L22.3879 13.9925Z" />
+                            </svg>
+                            @ChizzUI
+                        </a>
+                        <a href="https://github.com/Chizuui" target="_blank" rel="noopener noreferrer" class="terminal-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                            Github
+                        </a>
                     </div>
-                    <div class="affil-item">
-                        <div>
-                            <strong>nskg.team+</strong><br>
-                            <span style="color: var(--muted)">Graphic Designer</span>
+
+                    <div>
+                        <h3 class="panel-title">AFFILIATION</h3>
+                        <div class="affil-item">
+                            <div>
+                                <strong>Oxure Studio</strong><br>
+                                <span class="affil-role">Graphic Designer</span>
+                            </div>
+                            <span class="year">EST. 2024</span>
                         </div>
-                        <span class="year">EST. 2024</span>
-                    </div>
-                    <div class="affil-item">
-                        <div>
-                            <strong>realm.origins</strong><br>
-                            <span style="color: var(--muted)">Graphic Designer</span>
+                        <div class="affil-item">
+                            <div>
+                                <strong>nskg.team+</strong><br>
+                                <span class="affil-role">Graphic Designer</span>
+                            </div>
+                            <span class="year">EST. 2024</span>
                         </div>
-                        <span class="year">EST. 2024</span>
+                        <div class="affil-item">
+                            <div>
+                                <strong>realm.origins</strong><br>
+                                <span class="affil-role">Graphic Designer</span>
+                            </div>
+                            <span class="year">EST. 2024</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+    </main>
 
-        <div class="copyright">
-            <p>VERSION 2.0</p>
-            <p>©2025 - 2026 chizz.ui All right reserved</p>
+    <footer class="site-footer section-container">
+        <div class="footer-inner">
+            <span>chizz.ui</span>
+            <span>© 2025–2026 · All rights reserved</span>
         </div>
-    </section>
+    </footer>
 </body>
 </html>
