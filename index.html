@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Chizui | Portfolio</title>
 
-    <meta name="description" content="Akamiya Chizui (Desca) — designer and developer in Indonesia. Open for UI, graphic, and web commissions.">
+    <meta name="description" content="Akamiya Chizui (Desca) - designer and developer in Indonesia. Open for UI, graphic, and web commissions.">
     <link rel="canonical" href="https://chizui.dev/">
     <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#fdfaf9">
@@ -14,16 +14,23 @@
     <meta property="og:site_name" content="chizz.ui">
     <meta property="og:url" content="https://chizui.dev/">
     <meta property="og:title" content="Chizui | Portfolio">
-    <meta property="og:description" content="Akamiya Chizui (Desca) — designer and developer in Indonesia. Open for UI, graphic, and web commissions.">
+    <meta property="og:description" content="Akamiya Chizui (Desca) - designer and developer in Indonesia. Open for UI, graphic, and web commissions.">
     <!-- og:image intentionally omitted until a 1200x630 opaque cover exists.
          A missing image degrades to a clean text card; a wrong-shaped one renders as a blank box. -->
     <meta name="twitter:card" content="summary">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2.1.0">
-    <script src="script.js?v=2.1.0" defer></script>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- The two critical latin woff2 files start downloading immediately, in
+         parallel with the stylesheet. If Google bumps the version segment of
+         a URL, the preload 404s harmlessly and the stylesheet still wins. -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/fraunces/v38/6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2">
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="stylesheet" href="style.css?v=2.13.0">
+    <script src="script.js?v=2.10.0" defer></script>
 </head>
 <body>
     <!-- Warm gradient + 72px drafting grid + paper grain. All three are static. -->
@@ -35,6 +42,11 @@
 
     <nav class="line-sidebar" aria-label="Primary">
         <p class="sidebar-logo">chizz.ui</p>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-overlay" aria-label="Open menu">
+            <span class="nav-toggle-line" aria-hidden="true"></span>
+            <span class="nav-toggle-line" aria-hidden="true"></span>
+            <span class="nav-toggle-line" aria-hidden="true"></span>
+        </button>
         <div class="sidebar-nav">
             <div class="sidebar-line">
                 <div class="sidebar-indicator" id="nav-indicator"></div>
@@ -48,17 +60,27 @@
         </div>
     </nav>
 
+    <div class="nav-overlay" id="nav-overlay" aria-hidden="true" inert>
+        <nav class="nav-overlay-menu" aria-label="Mobile">
+            <a href="#home" class="nav-chip active" aria-current="true">Home</a>
+            <a href="#works" class="nav-chip">Posters</a>
+            <a href="#other" class="nav-chip">Other</a>
+            <a href="#contact" class="nav-chip">Contact</a>
+        </nav>
+        <p class="nav-overlay-foot">chizz.ui - open for commissions</p>
+    </div>
+
     <main>
         <section class="hero-section section-container" id="home" aria-labelledby="ed-name">
             <div class="editorial-hero">
                 <div class="ed-body">
-                    <h1 class="ed-name" id="ed-name">Akamiya<br>Chizui</h1>
+                    <h1 class="ed-name hero-reveal" id="ed-name">Akamiya<br>Chizui</h1>
                     <div class="ed-side">
-                        <p class="ed-desc">
-                            Hi, I'm Desca — a designer and developer who likes to make things.
+                        <p class="ed-desc hero-reveal">
+                            Hi, I'm Desca - a designer and developer <em>who likes to make things</em>.
                             I take commissions for UI, graphic work, and web.
                         </p>
-                        <div class="ed-meta">
+                        <div class="ed-meta hero-reveal">
                             <div class="ed-meta-item">
                                 <span class="ed-meta-label">Based in</span>
                                 <span class="ed-meta-value">Indonesia</span>
@@ -72,19 +94,24 @@
                                 <span class="ed-meta-value">VGen, Insta, Facebook</span>
                             </div>
                         </div>
-                        <a href="#works" class="ed-cta">See my work →</a>
+                        <a href="#works" class="ed-cta hero-reveal">
+                            <span class="ed-cta-label">See my work</span>
+                            <span class="ed-cta-arrow" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="m13 5 7 7-7 7"/></svg>
+                            </span>
+                        </a>
                     </div>
                 </div>
 
-                <div class="ed-footer">
+                <div class="ed-footer hero-reveal">
                     <span>Portfolio &amp; Commissions</span>
-                    <span>2024 — 2025</span>
+                    <span>2024-2025</span>
                 </div>
             </div>
         </section>
 
         <section class="works-posters section-container" id="works" aria-labelledby="title-posters">
-            <div class="section-head">
+            <div class="section-head animate-me">
                 <h2 class="section-title" id="title-posters">Poster Design</h2>
                 <p class="section-count">8 works</p>
             </div>
@@ -183,7 +210,7 @@
         </section>
 
         <section class="works-other section-container" id="other" aria-labelledby="title-other">
-            <div class="section-head">
+            <div class="section-head animate-me">
                 <h2 class="section-title" id="title-other">Other Design</h2>
                 <p class="section-count">6 works</p>
             </div>
@@ -322,7 +349,7 @@
     <footer class="site-footer section-container">
         <div class="footer-inner">
             <span>chizz.ui</span>
-            <span>© 2025–2026 · All rights reserved</span>
+            <span>© 2025-2026 · All rights reserved</span>
         </div>
     </footer>
 </body>

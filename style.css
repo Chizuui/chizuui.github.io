@@ -11,6 +11,7 @@
   --muted: #8a7373;
   --line: rgba(255, 59, 59, 0.35);
   --grid-line: rgba(255, 59, 59, 0.15);
+  --grid-minor: rgba(255, 59, 59, 0.08);
   --primary: #ff3b3b;
   --accent: #ff9500;
   --glass: rgba(255, 255, 255, 0.6);
@@ -22,6 +23,48 @@
   --measure: 1100px;                     /* every block shares one width */
   --rhythm: clamp(5rem, 9vw, 8rem);
   --rhythm-lg: clamp(7rem, 13vw, 11rem); /* wider gap = new body of work */
+}
+
+/* ============================================================
+   Shift-free font fallbacks
+   While the webfonts load, the browser renders the local fallback
+   below, pre-scaled with size-adjust + metric overrides measured
+   from the actual woff2 binaries (Windows fallbacks: Georgia,
+   Segoe UI, Consolas). When the webfont swaps in, line breaks and
+   vertical rhythm stay identical — no layout jump on slow links.
+   ============================================================ */
+
+@font-face {
+  font-family: "Fraunces Fallback";
+  src: local("Georgia");
+  font-style: normal;
+  font-weight: 400 700;
+  size-adjust: 99.74%;
+  ascent-override: 98.05%;
+  descent-override: 25.57%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans Fallback";
+  src: local("Segoe UI");
+  font-style: normal;
+  font-weight: 400 600;
+  size-adjust: 106.45%;
+  ascent-override: 97.51%;
+  descent-override: 20.86%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono Fallback";
+  src: local("Consolas");
+  font-style: normal;
+  font-weight: 400 500;
+  size-adjust: 109.13%;
+  ascent-override: 93.92%;
+  descent-override: 25.20%;
+  line-gap-override: 0%;
 }
 
 * {
@@ -38,14 +81,21 @@ html {
 body {
   background-color: var(--bg);
   color: var(--ink);
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
   overflow-x: clip;
 }
 
+/* Fraunces auto-selects its optical size (opsz) from the rendered
+   font-size: hairline display cuts at hero scale, denser text cuts
+   at label scale — exactly what a drafting blueprint needs.
+   Base tracking is tight (0.01em); uppercase labels override it
+   with a touch more air, and the display name pulls tighter still. */
 h1, h2, h3,
 .nav-brand, .nav-chip, .sidebar-logo, .section-title {
-  font-family: "Merriweather", serif;
-  letter-spacing: 0.02em;
+  font-family: "Fraunces", "Fraunces Fallback", Georgia, serif;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  letter-spacing: 0.01em;
 }
 
 /* Keyboard-only ring. Paper backing so it survives on top of a photograph. */
@@ -67,36 +117,42 @@ h1, h2, h3,
   position: fixed;
   inset: 0;
   overflow: hidden;
-  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+  /* Accent gradient wash: amber bleeds from the top-left, the red
+     accent from the bottom-right, bridged by a soft diagonal sweep.
+     Strong enough to read as a gradient, soft enough that the warm
+     paper stays the identity. */
+  background:
+    radial-gradient(1200px 820px at 84% -14%, rgba(255, 149, 0, 0.17), transparent 62%),
+    radial-gradient(1100px 800px at -10% 116%, rgba(255, 59, 59, 0.14), transparent 60%),
+    linear-gradient(115deg, rgba(255, 149, 0, 0.08) 0%, rgba(255, 149, 0, 0.02) 42%, rgba(255, 59, 59, 0.02) 58%, rgba(255, 59, 59, 0.08) 100%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
   z-index: -10;
 }
 
-/* The drafting grid. This is the theme. */
+/* The drafting grid. This is the theme. A faint 24px minor grid sits
+   under the 72px major grid for drafting-table depth. */
 .blueprint-bg::before {
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.22;
+  opacity: 0.26;
   background-image:
     linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 72px 72px;
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+  background-size: 72px 72px, 72px 72px, 24px 24px, 24px 24px;
 }
 
-/* Paper tooth. */
+/* Real paper tooth: fractal noise at ~3.5%, on the fixed layer only,
+   pointer-events-none - no GPU cost on scroll. */
 .blueprint-bg::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      rgba(26, 21, 21, 0.025) 0,
-      rgba(26, 21, 21, 0.025) 1px,
-      transparent 1px,
-      transparent 4px
-    );
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.035;
   mix-blend-mode: multiply;
 }
 
@@ -182,7 +238,7 @@ h1, h2, h3,
 
 .nav-chip::before {
   content: ">";
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
   font-weight: bold;
   font-size: 0.8rem;
   position: absolute;
@@ -203,6 +259,148 @@ h1, h2, h3,
   opacity: 1;
   transform: translateX(0);
 }
+
+
+/* ============================================================
+   Mobile nav — hamburger morph + fullscreen glass overlay
+   The toggle is a round button; the menu is a fixed overlay
+   that replaces the rail's chips on small screens.
+   ============================================================ */
+
+.nav-toggle {
+  display: none; /* desktop keeps the rail */
+  width: 44px;
+  height: 44px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color var(--anim-standard), background-color var(--anim-standard);
+}
+
+.nav-toggle:hover { border-color: var(--primary); }
+
+.nav-toggle-line {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1),
+              opacity 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* The morph: the two outer lines rotate into an X, the middle dissolves. */
+.nav-toggle[aria-expanded="true"] .nav-toggle-line:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-line:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 998; /* below the fixed top bar (999) so the X stays clickable */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  background: rgba(253, 250, 249, 0.82);
+  backdrop-filter: blur(24px) saturate(1.3);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1),
+              visibility 0s linear 0.5s;
+}
+
+.nav-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.nav-overlay-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+}
+
+/* The chips become oversized display links inside the overlay. */
+.nav-overlay .nav-chip {
+  height: auto;
+  min-height: 44px;
+  line-height: 1.1;
+  font-size: clamp(2.4rem, 10vw, 4.5rem);
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  padding: 0.5rem 0.75rem;
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.55s cubic-bezier(0.32, 0.72, 0, 1),
+    transform 0.55s cubic-bezier(0.32, 0.72, 0, 1),
+    color 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.nav-overlay .nav-chip.active { color: var(--primary); }
+
+.nav-overlay .nav-chip::before {
+  display: block;
+  left: -1.6rem;
+  font-size: clamp(1.4rem, 5vw, 2.2rem);
+  line-height: 1;
+}
+
+.nav-overlay.is-open .nav-chip:hover,
+.nav-overlay.is-open .nav-chip:focus-visible {
+  color: var(--primary);
+  transform: translateX(10px);
+}
+
+/* Staggered mask reveal — each chip surfaces in sequence. */
+.nav-overlay.is-open .nav-chip {
+  opacity: 1;
+  transform: translateY(0);
+}
+.nav-overlay.is-open .nav-chip:nth-child(1) { transition-delay: 120ms; }
+.nav-overlay.is-open .nav-chip:nth-child(2) { transition-delay: 190ms; }
+.nav-overlay.is-open .nav-chip:nth-child(3) { transition-delay: 260ms; }
+.nav-overlay.is-open .nav-chip:nth-child(4) { transition-delay: 330ms; }
+
+.nav-overlay-foot {
+  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1),
+              transform 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.nav-overlay.is-open .nav-overlay-foot {
+  opacity: 1;
+  transform: none;
+  transition-delay: 420ms;
+}
+
+/* Scroll lock while the menu is up. */
+body.nav-locked { overflow: hidden; }
 
 
 /* ============================================================
@@ -252,6 +450,7 @@ h1, h2, h3,
    ============================================================ */
 
 .editorial-hero {
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -271,9 +470,12 @@ h1, h2, h3,
   font-weight: 700;
   color: var(--ink);
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   overflow-wrap: anywhere;
   min-width: 0;
+  /* Hand-drawn drafting flavour: WONK swaps in the irregular alternates.
+     opsz is left to font-optical-sizing: auto (display cut up here). */
+  font-variation-settings: "WONK" 1;
 }
 
 .ed-side {
@@ -290,6 +492,16 @@ h1, h2, h3,
   line-height: 1.7;
 }
 
+/* The one italic serif accent in the hero — a hand-set editorial touch
+   that contrasts the sans body. opsz stays auto (text cut at this size). */
+.ed-desc em {
+  font-family: "Fraunces", "Fraunces Fallback", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
 .ed-meta {
   display: flex;
   flex-direction: column;
@@ -303,7 +515,7 @@ h1, h2, h3,
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
   font-size: 0.75rem;
 }
 
@@ -321,23 +533,59 @@ h1, h2, h3,
 
 .ed-open { color: var(--primary); }
 
+/* Sharp plate + tab: the same drawing convention as the CONTACT panel -
+   a hairline box with a dark tab notched into its edge. Zero radius
+   everywhere: shape lock with the rest of the page. */
 .ed-cta {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  position: relative;
+  padding: 0.55rem 4rem 0.55rem 1.5rem;
+  border: 1px solid var(--ink);
+  background: transparent;
   color: var(--ink);
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
   font-size: 0.85rem;
   letter-spacing: 0.05em;
   text-decoration: none;
-  border-bottom: 1px solid var(--ink);
-  padding-bottom: 2px;
-  width: fit-content;
   white-space: nowrap;
-  transition: color var(--anim-standard), border-color var(--anim-standard);
+  transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1),
+              border-color 0.4s cubic-bezier(0.32, 0.72, 0, 1),
+              background-color 0.4s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
+.ed-cta:active { transform: scale(0.98); }
+
+/* The arrow lives in a dark tab notched into the plate's right edge,
+   exactly like the CONTACT tab hangs off its panel. */
+.ed-cta-arrow {
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  right: -1px;
+  width: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  color: #fff;
+  transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1),
+              background-color 0.35s cubic-bezier(0.32, 0.72, 0, 1),
+              color 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Hover: the hairline ignites red, a whisper of red tint seeps in,
+   and the tab fills red while nudging diagonally. */
 .ed-cta:hover {
-  color: var(--primary);
   border-color: var(--primary);
+  background-color: rgba(255, 59, 59, 0.04);
+}
+
+.ed-cta:hover .ed-cta-arrow {
+  transform: translateX(3px); /* slides level - no vertical drift */
+  background: var(--primary);
+  color: #fff;
 }
 
 .ed-footer {
@@ -348,7 +596,7 @@ h1, h2, h3,
   flex-wrap: wrap;
   border-top: 1px solid var(--line);
   padding-top: 1rem;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
   font-size: 0.7rem;
   color: var(--muted);
   letter-spacing: 0.08em;
@@ -374,13 +622,14 @@ h1, h2, h3,
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1.05;
   text-transform: uppercase;
+  letter-spacing: 0.02em; /* engraved plate caps — a beat wider than base */
   text-align: left;
   overflow-wrap: anywhere;
   min-width: 0;
 }
 
 .section-count {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -426,11 +675,11 @@ a.operation-node {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
-  transition: transform var(--anim-standard);
+  transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 a.operation-node:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
 }
 
 .node-header {
@@ -448,7 +697,7 @@ a.operation-node:hover {
 }
 
 .node-label {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -457,8 +706,14 @@ a.operation-node:hover {
 
 /* Plate number is decorative — generated so it can never go stale. */
 .node-label::before {
-  content: counter(plate, decimal-leading-zero) " — ";
+  content: counter(plate, decimal-leading-zero) " - ";
   color: var(--ink);
+  transition: color 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+a.operation-node:hover .node-label::before,
+a.operation-node:focus-visible .node-label::before {
+  color: var(--primary);
 }
 
 .node-image {
@@ -468,6 +723,15 @@ a.operation-node:hover {
   border: 1px solid var(--line);
   background: var(--paper);
   padding: 4px;
+  transition: border-color 0.4s cubic-bezier(0.32, 0.72, 0, 1),
+              box-shadow 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* The hairline ignites on hover: a crisp 1px ring plus a soft red halo. */
+a.operation-node:hover .node-image {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px rgba(255, 59, 59, 0.5),
+              0 18px 44px -18px rgba(255, 59, 59, 0.35);
 }
 
 .node-image img {
@@ -475,12 +739,12 @@ a.operation-node:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--anim-standard);
+  transition: transform 0.6s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 a.operation-node:hover .node-image img,
 a.operation-node:focus-visible .node-image img {
-  transform: scale(1.02);
+  transform: scale(1.04);
 }
 
 
@@ -505,7 +769,7 @@ a.operation-node:focus-visible .node-image img {
   left: 20px;
   background: var(--ink);
   color: #fff;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
   font-size: 0.7rem;
   font-weight: 400;
   letter-spacing: 0.1em;
@@ -530,7 +794,8 @@ a.operation-node:focus-visible .node-image img {
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-family: "IBM Plex Mono", monospace;
+  min-height: 44px;
+  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
   color: var(--ink);
   text-decoration: none;
   margin-bottom: 1rem;
@@ -551,7 +816,7 @@ a.operation-node:focus-visible .node-image img {
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1rem;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
   font-size: 0.9rem;
 }
 
@@ -575,7 +840,7 @@ a.operation-node:focus-visible .node-image img {
   flex-wrap: wrap;
   border-top: 1px solid var(--line);
   padding-top: 1rem;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
   font-size: 0.7rem;
   color: var(--muted);
   letter-spacing: 0.08em;
@@ -587,17 +852,39 @@ a.operation-node:focus-visible .node-image img {
    Reveal — gallery cards only, one orchestrated entrance
    ============================================================ */
 
+/* Hero entrance — blur-fade, gated on html.js so no-JS stays visible.
+   JS drops the class once settled so hover physics (CTA pill, gallery)
+   own their transitions again. */
+html.js .hero-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  filter: blur(8px);
+  transition: opacity 0.8s cubic-bezier(0.32, 0.72, 0, 1),
+              transform 0.8s cubic-bezier(0.32, 0.72, 0, 1),
+              filter 0.8s cubic-bezier(0.32, 0.72, 0, 1);
+  transition-delay: var(--delay, 0s);
+}
+
+html.js .hero-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
 .animate-on-scroll {
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.4s cubic-bezier(0.2, 0, 0, 1),
-              transform 0.4s cubic-bezier(0.2, 0, 0, 1);
+  transform: translateY(20px);
+  filter: blur(6px);
+  transition: opacity 0.8s cubic-bezier(0.32, 0.72, 0, 1),
+              transform 0.8s cubic-bezier(0.32, 0.72, 0, 1),
+              filter 0.8s cubic-bezier(0.32, 0.72, 0, 1);
   transition-delay: var(--delay, 0s);
 }
 
 .animate-on-scroll.is-visible {
   opacity: 1;
   transform: none;
+  filter: none;
 }
 
 
@@ -622,8 +909,8 @@ a.operation-node:focus-visible .node-image img {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1.2rem var(--container-padding);
-    background: rgba(253, 250, 249, 0.9);
+    padding: calc(1.1rem + env(safe-area-inset-top)) var(--container-padding) 1.1rem;
+    background: rgba(253, 250, 249, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--line);
@@ -632,25 +919,20 @@ a.operation-node:focus-visible .node-image img {
   .sidebar-logo { display: block; }
   .sidebar-line { display: none; }
 
-  .nav-links-container {
-    flex-direction: row;
-    gap: 1.25rem;
-  }
+  /* With JS the chips live in the fullscreen overlay. */
+  .js .sidebar-nav { display: none; }
+  .js .nav-toggle { display: flex; }
 
-  .nav-chip::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background-color: var(--primary);
-    transition: width var(--anim-standard);
-  }
+  /* No-JS fallback: the rail collapses into a plain horizontal chip row. */
+  html:not(.js) .nav-toggle { display: none; }
+  html:not(.js) .nav-links-container { flex-direction: row; gap: 1.25rem; }
+  html:not(.js) .nav-chip::before { display: none; }
+  html:not(.js) .nav-chip:hover { transform: none; }
+}
 
-  .nav-chip.active::after { width: 100%; }
-  .nav-chip::before { display: none; }
-  .nav-chip:hover { transform: none; }
+/* Desktop never shows the mobile menu. */
+@media (min-width: 1025px) {
+  .nav-overlay { display: none; }
 }
 
 @media (max-width: 860px) {
@@ -676,12 +958,6 @@ a.operation-node:focus-visible .node-image img {
   .contact-panel { padding: 2rem 1.5rem; }
 }
 
-@media (max-width: 420px) {
-  .nav-links-container { gap: 0.9rem; }
-  .nav-chip { font-size: 0.7rem; }
-}
-
-
 /* ============================================================
    Reduced motion
    Every reveal here is transition-driven, so transition-duration
@@ -700,8 +976,10 @@ a.operation-node:focus-visible .node-image img {
 
   html { scroll-behavior: auto; }
 
-  .animate-on-scroll {
+  .animate-on-scroll,
+  .hero-reveal {
     opacity: 1 !important;
     transform: none !important;
+    filter: none !important;
   }
 }

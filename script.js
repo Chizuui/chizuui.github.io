@@ -1,3 +1,6 @@
+// The html.js gate is added by a tiny inline script in <head> (before the
+// stylesheet), so CSS knows JS is available before first paint. It swaps
+// the top-bar chips for the hamburger overlay and arms the hero entrance.
 document.addEventListener('DOMContentLoaded', function () {
     const railQuery = window.matchMedia('(min-width: 1025px)');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -24,17 +27,20 @@ document.addEventListener('DOMContentLoaded', function () {
         indicator.style.transform = `translateY(${rect.top - lineTop}px)`;
     }
 
+    // Rail chips and overlay chips share hrefs, so the active state is
+    // matched by section instead of by element identity.
     function setActive(link) {
-        if (!link || link.classList.contains('active')) return;
+        if (!link) return;
+        const href = link.getAttribute('href');
 
         navLinks.forEach(l => {
-            const on = l === link;
+            const on = l.getAttribute('href') === href;
             l.classList.toggle('active', on);
             if (on) l.setAttribute('aria-current', 'true');
             else l.removeAttribute('aria-current');
         });
 
-        updateSidebarIndicator(link);
+        updateSidebarIndicator(document.querySelector(`.nav-chip[href="${href}"]`));
     }
 
     navLinks.forEach(link => {
@@ -56,14 +62,63 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('main > section[id]').forEach(s => navObserver.observe(s));
 
-    // Sections are content-height now, so the last one may never reach the band.
-    window.addEventListener('scroll', () => {
-        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
-            setActive(navLinks[navLinks.length - 1]);
-        }
-    }, { passive: true });
+    // The last section may never reach the midline band on very tall
+    // viewports, so the footer doubles as a bottom sentinel: once it
+    // enters the bottom strip of the viewport, the page is at its end.
+    // Pure IntersectionObserver - no scroll listeners, per the skill.
+    const footer = document.querySelector('.site-footer');
+    if (footer) {
+        const footerObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                setActive(document.querySelector('.nav-chip[href="#contact"]'));
+            });
+        }, { rootMargin: '-85% 0px 0px 0px', threshold: 0 });
+        footerObserver.observe(footer);
+    }
 
     updateSidebarIndicator(document.querySelector('.nav-chip.active') || navLinks[0]);
+
+
+    /* ==== Mobile overlay menu ==== */
+
+    const navToggle = document.getElementById('nav-toggle');
+    const navOverlay = document.getElementById('nav-overlay');
+    const overlayLinks = navOverlay ? Array.from(navOverlay.querySelectorAll('a')) : [];
+
+    function setOverlay(open) {
+        if (!navToggle || !navOverlay) return;
+        navOverlay.classList.toggle('is-open', open);
+        navToggle.setAttribute('aria-expanded', String(open));
+        navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        navOverlay.setAttribute('aria-hidden', String(!open));
+        navOverlay.inert = !open; // keeps the closed menu out of tab order
+        document.body.classList.toggle('nav-locked', open);
+        (open ? (overlayLinks[0] || navToggle) : navToggle).focus();
+    }
+
+    if (navToggle && navOverlay) {
+        navToggle.addEventListener('click', () => {
+            setOverlay(!navOverlay.classList.contains('is-open'));
+        });
+
+        // Choosing a destination closes the menu; the anchor jump still runs.
+        overlayLinks.forEach(link => link.addEventListener('click', () => setOverlay(false)));
+
+        // Tapping the empty backdrop dismisses it.
+        navOverlay.addEventListener('click', e => {
+            if (e.target === navOverlay) setOverlay(false);
+        });
+
+        window.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && navOverlay.classList.contains('is-open')) setOverlay(false);
+        });
+
+        // Growing past the tablet breakpoint drops the overlay entirely.
+        railQuery.addEventListener('change', e => {
+            if (e.matches) setOverlay(false);
+        });
+    }
 
 
     /* ==== Gallery reveal ==== */
@@ -83,10 +138,47 @@ document.addEventListener('DOMContentLoaded', function () {
             // Stagger is counted per grid, so it tracks the real column run
             // instead of drifting with document order.
             grid.querySelectorAll('.animate-me').forEach((el, i) => {
-                el.style.setProperty('--delay', `${Math.min(i, 3) * 0.06}s`);
+                el.style.setProperty('--delay', `${Math.min(i, 3) * 0.08}s`);
                 el.classList.add('animate-on-scroll');
                 revealObserver.observe(el);
             });
         });
+
+        // Section heads — one per section, shallow stagger.
+        document.querySelectorAll('.section-head').forEach((el, i) => {
+            el.style.setProperty('--delay', `${Math.min(i, 3) * 0.08}s`);
+            el.classList.add('animate-on-scroll');
+            revealObserver.observe(el);
+        });
+    }
+
+
+    /* ==== Hero entrance ==== */
+
+    // Hero elements are hidden by CSS under html.js, so they blur-fade in
+    // once on load. The reveal class is dropped once settled so hover
+    // physics (CTA pill, gallery) take over their own transitions.
+    if (!reduceMotion.matches) {
+        const heroReveals = Array.from(document.querySelectorAll('.hero-reveal'));
+        heroReveals.forEach((el, i) => {
+            el.style.setProperty('--delay', `${0.15 + i * 0.1}s`);
+        });
+
+        // Double rAF guarantees the hidden state is painted before the
+        // visible state lands, so the transition actually runs.
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                heroReveals.forEach(el => el.classList.add('is-visible'));
+            });
+        });
+
+        // 0.8s transition + first delay + stagger, plus slack.
+        const settleMs = 1000 + 0.15 * 1000 + (heroReveals.length - 1) * 100 + 200;
+        setTimeout(() => {
+            heroReveals.forEach(el => {
+                el.classList.remove('hero-reveal');
+                el.style.removeProperty('--delay');
+            });
+        }, settleMs);
     }
 });
