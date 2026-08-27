@@ -181,4 +181,107 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }, settleMs);
     }
+    /* ==== Poster lightbox ==== */
+
+    const posterLinks = Array.from(document.querySelectorAll('.gallery--posters a.operation-node'));
+    const lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightbox.innerHTML = `
+        <button class="lightbox-close" type="button" aria-label="Close preview">×</button>
+        <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous poster">←</button>
+        <figure class="lightbox-figure">
+            <img class="lightbox-image" alt="">
+            <figcaption class="lightbox-caption">
+                <span class="lightbox-index"></span>
+                <span class="lightbox-name"></span>
+            </figcaption>
+            <a class="lightbox-original" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Open original ↗</a>
+        </figure>
+        <button class="lightbox-nav lightbox-next" type="button" aria-label="Next poster">→</button>
+    `;
+    document.body.appendChild(lightbox);
+
+    const lightboxImage = lightbox.querySelector('.lightbox-image');
+    const lightboxIndex = lightbox.querySelector('.lightbox-index');
+    const lightboxName = lightbox.querySelector('.lightbox-name');
+    const lightboxOriginal = lightbox.querySelector('.lightbox-original');
+    const lightboxClose = lightbox.querySelector('.lightbox-close');
+    const lightboxPrev = lightbox.querySelector('.lightbox-prev');
+    const lightboxNext = lightbox.querySelector('.lightbox-next');
+    let activePosterIndex = 0;
+    let previousFocus = null;
+
+    function updateLightbox(index) {
+        const link = posterLinks[index];
+        const image = link ? link.querySelector('img') : null;
+        if (!link || !image) return;
+
+        activePosterIndex = index;
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt;
+        lightboxIndex.textContent = `${String(index + 1).padStart(2, '0')} / ${String(posterLinks.length).padStart(2, '0')}`;
+        lightboxName.textContent = image.alt;
+        lightboxOriginal.href = link.href;
+        lightboxPrev.disabled = posterLinks.length < 2;
+        lightboxNext.disabled = posterLinks.length < 2;
+    }
+
+    function setLightbox(open) {
+        lightbox.classList.toggle('is-open', open);
+        lightbox.setAttribute('aria-hidden', String(!open));
+        document.body.classList.toggle('lightbox-locked', open);
+        if (open) lightboxClose.focus();
+        else if (previousFocus) previousFocus.focus();
+    }
+
+    function openPoster(index) {
+        if (!posterLinks.length) return;
+        previousFocus = document.activeElement;
+        updateLightbox((index + posterLinks.length) % posterLinks.length);
+        setLightbox(true);
+    }
+
+    function stepPoster(direction) {
+        if (!posterLinks.length) return;
+        updateLightbox((activePosterIndex + direction + posterLinks.length) % posterLinks.length);
+    }
+
+    posterLinks.forEach((link, index) => {
+        link.addEventListener('click', event => {
+            event.preventDefault();
+            openPoster(index);
+        });
+    });
+
+    lightboxClose.addEventListener('click', () => setLightbox(false));
+    lightboxPrev.addEventListener('click', () => stepPoster(-1));
+    lightboxNext.addEventListener('click', () => stepPoster(1));
+    lightbox.addEventListener('click', event => {
+        if (event.target === lightbox) setLightbox(false);
+    });
+
+    window.addEventListener('keydown', event => {
+        if (!lightbox.classList.contains('is-open')) return;
+        if (event.key === 'Escape') setLightbox(false);
+        if (event.key === 'ArrowLeft') stepPoster(-1);
+        if (event.key === 'ArrowRight') stepPoster(1);
+    });
+
+    /* ==== Copy email ==== */
+
+    const copyEmailButton = document.querySelector('.copy-email');
+    const copyFeedback = document.querySelector('.copy-feedback');
+
+    if (copyEmailButton && copyFeedback) {
+        copyEmailButton.addEventListener('click', async () => {
+            const email = copyEmailButton.dataset.copyEmail;
+            try {
+                await navigator.clipboard.writeText(email);
+                copyFeedback.textContent = 'Email copied';
+            } catch {
+                copyFeedback.textContent = 'Copy failed — select the email above';
+            }
+        });
+    }
 });

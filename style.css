@@ -1,985 +1,350 @@
-/* ============================================================
-   chizz.ui — warm editorial
-   Paper, one red accent, hairlines, no rounded corners.
-   ============================================================ */
+/*
+   chizz.ui — redline archive studio
+   A warm paper system, one oxide accent, sharp editorial geometry.
+   The HTML and JavaScript are intentionally left intact: this file is the
+   visual layer only.
+*/
 
 :root {
-  --bg: #fdfaf9;
-  --bg-deep: #f7f0eb;
-  --paper: rgba(255, 255, 255, 0.85);
-  --ink: #1a1515;
-  --muted: #8a7373;
-  --line: rgba(255, 59, 59, 0.35);
-  --grid-line: rgba(255, 59, 59, 0.15);
-  --grid-minor: rgba(255, 59, 59, 0.08);
-  --primary: #ff3b3b;
-  --accent: #ff9500;
-  --glass: rgba(255, 255, 255, 0.6);
-
-  --anim-standard: 300ms cubic-bezier(0.2, 0, 0, 1);
-
-  --container-padding: 8vw;
-  --gallery-gap: 3rem;
-  --measure: 1100px;                     /* every block shares one width */
-  --rhythm: clamp(5rem, 9vw, 8rem);
-  --rhythm-lg: clamp(7rem, 13vw, 11rem); /* wider gap = new body of work */
+  --bg: #eee8df;
+  --bg-deep: #e7dfd5;
+  --paper: #f8f4ee;
+  --ink: #1b1815;
+  --muted: #776e64;
+  --muted-light: #bdb2a5;
+  --line: rgba(27, 24, 21, 0.18);
+  --line-strong: rgba(27, 24, 21, 0.55);
+  --grid-line: rgba(27, 24, 21, 0.09);
+  --grid-minor: rgba(27, 24, 21, 0.045);
+  --primary: #c94f3e;
+  --shadow: rgba(50, 35, 24, 0.14);
+  --anim-standard: 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  --anim-snap: 520ms cubic-bezier(0.16, 1, 0.3, 1);
+  --container-padding: clamp(2rem, 7vw, 7.5rem);
+  --gallery-gap: clamp(1rem, 2.4vw, 2.25rem);
+  --measure: 1280px;
+  --rhythm: clamp(6rem, 12vw, 11rem);
+  --rhythm-lg: clamp(8rem, 17vw, 16rem);
 }
 
-/* ============================================================
-   Shift-free font fallbacks
-   While the webfonts load, the browser renders the local fallback
-   below, pre-scaled with size-adjust + metric overrides measured
-   from the actual woff2 binaries (Windows fallbacks: Georgia,
-   Segoe UI, Consolas). When the webfont swaps in, line breaks and
-   vertical rhythm stay identical — no layout jump on slow links.
-   ============================================================ */
+@font-face { font-family: "Fraunces Fallback"; src: local("Georgia"); font-style: normal; font-weight: 400 700; size-adjust: 99.74%; ascent-override: 98.05%; descent-override: 25.57%; line-gap-override: 0%; }
+@font-face { font-family: "Plus Jakarta Sans Fallback"; src: local("Segoe UI"); font-style: normal; font-weight: 400 600; size-adjust: 106.45%; ascent-override: 97.51%; descent-override: 20.86%; line-gap-override: 0%; }
+@font-face { font-family: "IBM Plex Mono Fallback"; src: local("Consolas"); font-style: normal; font-weight: 400 500; size-adjust: 109.13%; ascent-override: 93.92%; descent-override: 25.2%; line-gap-override: 0%; }
 
-@font-face {
-  font-family: "Fraunces Fallback";
-  src: local("Georgia");
-  font-style: normal;
-  font-weight: 400 700;
-  size-adjust: 99.74%;
-  ascent-override: 98.05%;
-  descent-override: 25.57%;
-  line-gap-override: 0%;
-}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif; overflow-x: clip; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, .nav-brand, .nav-chip, .sidebar-logo, .section-title { font-family: "Fraunces", "Fraunces Fallback", Georgia, serif; font-optical-sizing: auto; text-rendering: optimizeLegibility; }
+h1, h2, h3, p, ul, figure { margin: 0; }
+:where(a, button, summary, [tabindex]):focus-visible { outline: 2px solid var(--primary); outline-offset: 5px; box-shadow: 0 0 0 2px var(--bg); }
+:focus:not(:focus-visible) { outline: none; }
 
-@font-face {
-  font-family: "Plus Jakarta Sans Fallback";
-  src: local("Segoe UI");
-  font-style: normal;
-  font-weight: 400 600;
-  size-adjust: 106.45%;
-  ascent-override: 97.51%;
-  descent-override: 20.86%;
-  line-gap-override: 0%;
-}
+/* Atmosphere: measured drafting grid + quiet paper grain. */
+.blueprint-bg { position: fixed; inset: 0; z-index: -10; overflow: hidden; background: radial-gradient(900px 620px at 84% 2%, rgba(201, 79, 62, 0.12), transparent 68%), radial-gradient(800px 580px at 4% 100%, rgba(105, 87, 63, 0.08), transparent 70%), linear-gradient(135deg, var(--bg) 0%, var(--bg-deep) 100%); }
+.blueprint-bg::before { content: ""; position: absolute; inset: 0; opacity: 0.5; background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px), linear-gradient(var(--grid-minor) 1px, transparent 1px), linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px); background-size: 88px 88px, 88px 88px, 22px 22px, 22px 22px; mask-image: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, 0.72) 55%, transparent 100%); }
+.blueprint-bg::after { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E"); opacity: 0.045; mix-blend-mode: multiply; }
 
-@font-face {
-  font-family: "IBM Plex Mono Fallback";
-  src: local("Consolas");
-  font-style: normal;
-  font-weight: 400 500;
-  size-adjust: 109.13%;
-  ascent-override: 93.92%;
-  descent-override: 25.20%;
-  line-gap-override: 0%;
-}
+/* Fixed navigation. */
+.brand-header { position: fixed; top: 2.5rem; left: var(--container-padding); z-index: 999; }
+.nav-brand, .sidebar-logo { color: var(--ink); font-size: 1.2rem; font-weight: 700; letter-spacing: -0.03em; }
+.nav-brand::after, .sidebar-logo::after { content: " / studio"; color: var(--primary); font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace; font-size: 0.55em; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; }
+.line-sidebar { position: fixed; top: 50%; left: clamp(1.25rem, 2.8vw, 3rem); z-index: 999; display: flex; flex-direction: column; transform: translateY(-50%); }
+.sidebar-logo { display: none; }
+.sidebar-nav { display: flex; gap: 1.2rem; align-items: stretch; }
+.sidebar-line { position: relative; width: 1px; background: var(--line); }
+.sidebar-indicator { position: absolute; top: 0; left: -1px; width: 3px; height: 20px; background: var(--primary); transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1), height 300ms ease; }
+.nav-links-container { display: flex; flex-direction: column; gap: 1.25rem; }
+.nav-chip { position: relative; display: flex; height: 20px; align-items: center; color: var(--muted); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em; line-height: 20px; text-decoration: none; white-space: nowrap; transition: color var(--anim-standard), transform var(--anim-standard); }
+.nav-chip::before { content: "↳"; position: absolute; left: -1.2rem; color: var(--primary); font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace; font-size: 0.78rem; opacity: 0; transform: translateX(-5px); transition: opacity var(--anim-standard), transform var(--anim-standard); }
+.nav-chip:hover, .nav-chip.active { color: var(--ink); }
+.nav-chip:hover { transform: translateX(5px); }
+.nav-chip:hover::before, .nav-chip:focus-visible::before, .nav-chip.active::before { opacity: 1; transform: translateX(0); }
+.nav-toggle { display: none; width: 46px; height: 46px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; border: 1px solid var(--line-strong); border-radius: 50%; background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--anim-standard), border-color var(--anim-standard), transform var(--anim-standard); }
+.nav-toggle:hover { border-color: var(--primary); background: rgba(201, 79, 62, 0.08); }
+.nav-toggle:active { transform: scale(0.94); }
+.nav-toggle-line { display: block; width: 18px; height: 1.5px; background: var(--ink); transition: transform 450ms cubic-bezier(0.32, 0.72, 0, 1), opacity 300ms cubic-bezier(0.32, 0.72, 0, 1); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-line:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-line:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+.nav-overlay { position: fixed; inset: 0; z-index: 998; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 2.5rem; background: rgba(238, 232, 223, 0.91); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 500ms var(--anim-standard), visibility 0s linear 500ms; }
+.nav-overlay.is-open { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity 500ms var(--anim-standard); }
+.nav-overlay-menu { display: flex; align-items: center; flex-direction: column; gap: 0.15rem; padding-bottom: calc(1rem + env(safe-area-inset-bottom)); }
+.nav-overlay .nav-chip { height: auto; min-height: 44px; padding: 0.35rem 0.75rem; color: var(--ink); font-size: clamp(2.8rem, 12vw, 5rem); letter-spacing: -0.04em; line-height: 1; opacity: 0; transform: translateY(24px); transition: opacity 550ms var(--anim-standard), transform 550ms var(--anim-standard), color 300ms var(--anim-standard); }
+.nav-overlay .nav-chip.active { color: var(--primary); }
+.nav-overlay .nav-chip::before { left: -1.55rem; font-size: 1.3rem; }
+.nav-overlay.is-open .nav-chip:hover, .nav-overlay.is-open .nav-chip:focus-visible { color: var(--primary); transform: translateX(10px); }
+.nav-overlay.is-open .nav-chip { opacity: 1; transform: translateY(0); }
+.nav-overlay.is-open .nav-chip:nth-child(1) { transition-delay: 100ms; }
+.nav-overlay.is-open .nav-chip:nth-child(2) { transition-delay: 170ms; }
+.nav-overlay.is-open .nav-chip:nth-child(3) { transition-delay: 240ms; }
+.nav-overlay.is-open .nav-chip:nth-child(4) { transition-delay: 310ms; }
+.nav-overlay-foot, .ed-footer, .footer-inner, .section-count, .node-label, .ed-meta-item, .terminal-link, .affil-item { font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace; }
+.nav-overlay-foot { color: var(--muted); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; transform: translateY(10px); transition: opacity 450ms var(--anim-standard), transform 450ms var(--anim-standard); }
+.nav-overlay.is-open .nav-overlay-foot { opacity: 1; transform: none; transition-delay: 400ms; }
+body.nav-locked { overflow: hidden; }
+body.lightbox-locked { overflow: hidden; }
 
-html {
-  scroll-behavior: smooth;
-  overflow-x: clip;
-}
+/* Shared section rhythm. */
+.section-container { position: relative; z-index: 1; padding-inline: var(--container-padding); scroll-margin-top: 6rem; }
+@media (min-width: 1025px) { .section-container { scroll-margin-top: 0; } }
+.hero-section { min-height: 100dvh; display: flex; align-items: flex-start; justify-content: center; flex-direction: column; padding-block: 8rem 7rem; }
+.works-posters { padding-block: var(--rhythm) 0; }
+.works-other { padding-block: var(--rhythm-lg) 0; }
+.contact { padding-block: var(--rhythm-lg) 0; }
+.site-footer { padding-block: var(--rhythm) 3rem; }
+.editorial-hero, .section-head, .gallery-grid, .contact-panel, .footer-inner { width: 100%; max-width: var(--measure); margin-inline: auto; }
 
-body {
-  background-color: var(--bg);
-  color: var(--ink);
-  font-family: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
-  overflow-x: clip;
-}
+/* Hero: large typographic anchor + narrow technical brief. */
+.editorial-hero { position: relative; }
+.editorial-hero::after { content: "026"; position: absolute; right: -0.02em; bottom: 2.2rem; color: rgba(27, 24, 21, 0.055); font-family: "Fraunces", "Fraunces Fallback", Georgia, serif; font-size: clamp(10rem, 29vw, 31rem); font-weight: 700; letter-spacing: -0.1em; line-height: 0.7; pointer-events: none; user-select: none; }
+.ed-body { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(270px, 360px); align-items: end; gap: clamp(2rem, 8vw, 9rem); padding-top: 1.6rem; margin-bottom: 2rem; border-top: 1px solid var(--ink); }
+.ed-name { max-width: 9ch; color: var(--ink); font-size: clamp(5rem, 11.5vw, 11.5rem); font-weight: 700; letter-spacing: -0.08em; line-height: 0.82; overflow-wrap: anywhere; font-variation-settings: "WONK" 1; }
+.ed-side { display: flex; min-width: 0; flex-direction: column; gap: 1.8rem; padding-bottom: 0.5rem; }
+.ed-desc { max-width: 32ch; color: var(--muted); font-size: clamp(0.95rem, 1.1vw, 1.08rem); line-height: 1.7; }
+.ed-desc em { color: var(--ink); font-family: "Fraunces", "Fraunces Fallback", Georgia, serif; font-style: italic; font-weight: 400; }
+.ed-meta { display: flex; flex-direction: column; gap: 0.6rem; padding-left: 1rem; border-left: 2px solid var(--primary); }
+.ed-meta-item { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; font-size: 0.68rem; }
+.ed-meta-label { color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.ed-meta-value { color: var(--ink); font-weight: 500; text-align: right; }
+.ed-open { color: var(--primary); }
+.ed-cta { position: relative; display: inline-flex; align-self: flex-start; align-items: center; min-height: 48px; padding: 0.6rem 4rem 0.6rem 1.25rem; border: 1px solid var(--ink); color: var(--ink); font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace; font-size: 0.76rem; letter-spacing: 0.05em; text-decoration: none; white-space: nowrap; transition: background-color var(--anim-standard), border-color var(--anim-standard), color var(--anim-standard), transform var(--anim-standard); }
+.ed-cta:hover { border-color: var(--primary); background: var(--primary); color: var(--paper); transform: translateY(-3px); }
+.ed-cta:active { transform: translateY(0) scale(0.98); }
+.ed-cta-arrow { position: absolute; inset-block: -1px; right: -1px; display: flex; width: 3rem; align-items: center; justify-content: center; border-left: 1px solid currentColor; background: var(--ink); color: var(--paper); transition: transform var(--anim-standard), background-color var(--anim-standard), color var(--anim-standard); }
+.ed-cta:hover .ed-cta-arrow { background: var(--paper); color: var(--primary); transform: translateX(3px); }
+.ed-footer { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; }
 
-/* Fraunces auto-selects its optical size (opsz) from the rendered
-   font-size: hairline display cuts at hero scale, denser text cuts
-   at label scale — exactly what a drafting blueprint needs.
-   Base tracking is tight (0.01em); uppercase labels override it
-   with a touch more air, and the display name pulls tighter still. */
-h1, h2, h3,
-.nav-brand, .nav-chip, .sidebar-logo, .section-title {
-  font-family: "Fraunces", "Fraunces Fallback", Georgia, serif;
-  font-optical-sizing: auto;
-  text-rendering: optimizeLegibility;
-  letter-spacing: 0.01em;
-}
+/* Section headings use the same redline as the hero. */
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 2rem; padding-top: 1.2rem; margin-bottom: 3.5rem; border-top: 1px solid var(--ink); }
+.section-title { color: var(--ink); font-size: clamp(2.6rem, 5vw, 5.5rem); font-weight: 600; letter-spacing: -0.06em; line-height: 0.9; text-wrap: balance; }
+.section-count { color: var(--muted); font-size: 0.66rem; letter-spacing: 0.1em; white-space: nowrap; }
 
-/* Keyboard-only ring. Paper backing so it survives on top of a photograph. */
-:where(a, button, summary, [tabindex]):focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 3px;
-  box-shadow: 0 0 0 5px var(--bg);
-}
-:focus:not(:focus-visible) {
-  outline: none;
-}
+/* Gallery: portrait work gets a broken, editorial rhythm. */
+.gallery-grid { display: grid; list-style: none; gap: var(--gallery-gap); counter-reset: plate; }
+.gallery--posters { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.gallery--posters > li:nth-child(2), .gallery--posters > li:nth-child(6) { margin-top: clamp(1.5rem, 5vw, 5rem); }
+.gallery--posters > li:nth-child(4), .gallery--posters > li:nth-child(8) { margin-top: clamp(-1rem, -1.8vw, -0.25rem); }
+.gallery--posters .node-image { aspect-ratio: 4 / 5; }
+.gallery--other { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); row-gap: clamp(2.5rem, 8vw, 8rem); }
+.gallery--other > li:nth-child(2) { margin-top: clamp(1.5rem, 7vw, 7rem); }
+.gallery--other > li:nth-child(3) { margin-top: clamp(-4rem, -5vw, -1rem); }
+.gallery--other .node-image { aspect-ratio: 16 / 9; }
+.operation-node { position: relative; display: flex; height: 100%; flex-direction: column; gap: 0.8rem; counter-increment: plate; }
+a.operation-node { color: inherit; text-decoration: none; cursor: pointer; transition: transform var(--anim-snap); }
+a.operation-node:hover { transform: translateY(-8px); }
+.node-header { display: flex; align-items: center; gap: 0.65rem; }
+.node-core { width: 7px; height: 7px; flex: none; background: var(--primary); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.node-label { color: var(--muted); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.node-label::before { content: counter(plate, decimal-leading-zero) " / "; color: var(--ink); transition: color var(--anim-standard); }
+a.operation-node:hover .node-label::before, a.operation-node:focus-visible .node-label::before { color: var(--primary); }
+.node-image { display: block; width: 100%; overflow: hidden; padding: 0.32rem; border: 1px solid var(--line); background: var(--paper); transition: border-color var(--anim-standard), box-shadow var(--anim-standard), background-color var(--anim-standard); }
+a.operation-node:hover .node-image { border-color: var(--primary); background: #fbf5ef; box-shadow: 0 20px 45px -24px var(--shadow), 0 0 0 1px rgba(201, 79, 62, 0.38); }
+.node-image img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--anim-snap), filter 500ms var(--anim-standard); }
+a.operation-node:hover .node-image img, a.operation-node:focus-visible .node-image img { transform: scale(1.035); filter: saturate(1.04) contrast(1.02); }
 
+/* Contact panel is the visual counterweight to the paper field. */
+.contact-panel { position: relative; padding: clamp(2rem, 5vw, 5rem); border: 1px solid var(--ink); background: var(--ink); color: var(--paper); box-shadow: 20px 24px 0 rgba(27, 24, 21, 0.08); }
+.panel-tab { position: absolute; top: -13px; left: clamp(1.25rem, 3vw, 3rem); padding: 0.35rem 0.8rem; background: var(--primary); color: var(--paper); font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace; font-size: 0.66rem; font-weight: 400; letter-spacing: 0.12em; }
+.contact-grid { display: grid; grid-template-columns: 1fr 0.82fr; gap: clamp(2.5rem, 8vw, 8rem); }
+.panel-title { margin-bottom: 1.6rem; padding-bottom: 0.65rem; border-bottom: 1px solid rgba(248, 244, 238, 0.25); color: var(--paper); font-size: clamp(1.3rem, 2vw, 1.8rem); letter-spacing: -0.04em; }
+.terminal-link { display: flex; min-height: 44px; align-items: center; gap: 0.9rem; margin-bottom: 0.7rem; padding: 0.6rem 0.7rem; border: 1px solid transparent; color: var(--paper); font-size: 0.78rem; text-decoration: none; transition: color var(--anim-standard), border-color var(--anim-standard), background-color var(--anim-standard), transform var(--anim-standard); }
+.terminal-link svg { flex: none; color: var(--primary); }
+.terminal-link:hover { border-color: var(--primary); background: rgba(201, 79, 62, 0.13); color: #fff; transform: translateX(5px); }
+.affil-item { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.3rem; padding-bottom: 1.3rem; border-bottom: 1px solid rgba(248, 244, 238, 0.16); font-size: 0.78rem; }
+.affil-item strong { color: var(--paper); font-weight: 500; }
+.affil-role { color: var(--muted-light); }
+.affil-item span.year { color: var(--primary); white-space: nowrap; }
 
-/* ============================================================
-   Background — three static layers
-   ============================================================ */
+/* Footer deliberately stays small and quiet. */
+.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.footer-inner span:first-child { color: var(--ink); }
 
-.blueprint-bg {
+/* Poster preview: an editorial lightbox, not a generic modal card. */
+.lightbox {
   position: fixed;
   inset: 0;
-  overflow: hidden;
-  /* Accent gradient wash: amber bleeds from the top-left, the red
-     accent from the bottom-right, bridged by a soft diagonal sweep.
-     Strong enough to read as a gradient, soft enough that the warm
-     paper stays the identity. */
-  background:
-    radial-gradient(1200px 820px at 84% -14%, rgba(255, 149, 0, 0.17), transparent 62%),
-    radial-gradient(1100px 800px at -10% 116%, rgba(255, 59, 59, 0.14), transparent 60%),
-    linear-gradient(115deg, rgba(255, 149, 0, 0.08) 0%, rgba(255, 149, 0, 0.02) 42%, rgba(255, 59, 59, 0.02) 58%, rgba(255, 59, 59, 0.08) 100%),
-    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
-  z-index: -10;
-}
-
-/* The drafting grid. This is the theme. A faint 24px minor grid sits
-   under the 72px major grid for drafting-table depth. */
-.blueprint-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0.26;
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
-    linear-gradient(var(--grid-minor) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
-  background-size: 72px 72px, 72px 72px, 24px 24px, 24px 24px;
-}
-
-/* Real paper tooth: fractal noise at ~3.5%, on the fixed layer only,
-   pointer-events-none - no GPU cost on scroll. */
-.blueprint-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.035;
-  mix-blend-mode: multiply;
-}
-
-
-/* ============================================================
-   Header & navigation
-   ============================================================ */
-
-.brand-header {
-  position: fixed;
-  top: 40px;
-  left: var(--container-padding);
-  z-index: 999;
-}
-
-.nav-brand {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary);
-}
-
-.line-sidebar {
-  position: fixed;
-  top: 50%;
-  left: 4vw;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  z-index: 999;
-}
-
-.sidebar-logo {
-  display: none; /* desktop uses .brand-header instead */
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary);
-}
-
-.sidebar-nav {
-  display: flex;
-  gap: 1.5rem;
-  align-items: stretch;
-}
-
-/* The rail sizes itself from the chip stack — no hardcoded height. */
-.sidebar-line {
-  position: relative;
-  width: 2px;
-  background: var(--line);
-  align-self: stretch;
-}
-
-.sidebar-indicator {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 20px;
-  background: var(--primary);
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.nav-links-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.nav-chip {
-  text-decoration: none;
-  color: var(--muted);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  transition: color var(--anim-standard), transform var(--anim-standard);
-  position: relative;
-  height: 20px;
-  line-height: 20px;
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-}
-
-.nav-chip::before {
-  content: ">";
-  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
-  font-weight: bold;
-  font-size: 0.8rem;
-  position: absolute;
-  left: -15px;
-  opacity: 0;
-  color: var(--primary);
-  transform: translateX(-5px);
-  transition: transform var(--anim-standard), opacity var(--anim-standard);
-}
-
-.nav-chip:hover {
-  color: var(--ink);
-  transform: translateX(6px);
-}
-
-.nav-chip:hover::before,
-.nav-chip:focus-visible::before {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-
-/* ============================================================
-   Mobile nav — hamburger morph + fullscreen glass overlay
-   The toggle is a round button; the menu is a fixed overlay
-   that replaces the rail's chips on small screens.
-   ============================================================ */
-
-.nav-toggle {
-  display: none; /* desktop keeps the rail */
-  width: 44px;
-  height: 44px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  background: transparent;
-  border: 1px solid var(--line);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition: border-color var(--anim-standard), background-color var(--anim-standard);
-}
-
-.nav-toggle:hover { border-color: var(--primary); }
-
-.nav-toggle-line {
-  display: block;
-  width: 18px;
-  height: 1.5px;
-  background: var(--ink);
-  transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1),
-              opacity 0.3s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-/* The morph: the two outer lines rotate into an X, the middle dissolves. */
-.nav-toggle[aria-expanded="true"] .nav-toggle-line:nth-child(1) {
-  transform: translateY(6.5px) rotate(45deg);
-}
-.nav-toggle[aria-expanded="true"] .nav-toggle-line:nth-child(2) {
-  opacity: 0;
-  transform: scaleX(0);
-}
-.nav-toggle[aria-expanded="true"] .nav-toggle-line:nth-child(3) {
-  transform: translateY(-6.5px) rotate(-45deg);
-}
-
-.nav-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 998; /* below the fixed top bar (999) so the X stays clickable */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2.5rem;
-  background: rgba(253, 250, 249, 0.82);
-  backdrop-filter: blur(24px) saturate(1.3);
-  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  z-index: 1100;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 4rem);
+  background: rgba(27, 24, 21, 0.92);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1),
-              visibility 0s linear 0.5s;
+  transition: opacity 360ms var(--anim-standard), visibility 0s linear 360ms;
 }
 
-.nav-overlay.is-open {
+.lightbox.is-open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+  transition: opacity 360ms var(--anim-standard);
 }
 
-.nav-overlay-menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
-}
-
-/* The chips become oversized display links inside the overlay. */
-.nav-overlay .nav-chip {
-  height: auto;
-  min-height: 44px;
-  line-height: 1.1;
-  font-size: clamp(2.4rem, 10vw, 4.5rem);
-  letter-spacing: 0.01em;
-  color: var(--ink);
-  padding: 0.5rem 0.75rem;
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.55s cubic-bezier(0.32, 0.72, 0, 1),
-    transform 0.55s cubic-bezier(0.32, 0.72, 0, 1),
-    color 0.3s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-.nav-overlay .nav-chip.active { color: var(--primary); }
-
-.nav-overlay .nav-chip::before {
-  display: block;
-  left: -1.6rem;
-  font-size: clamp(1.4rem, 5vw, 2.2rem);
-  line-height: 1;
-}
-
-.nav-overlay.is-open .nav-chip:hover,
-.nav-overlay.is-open .nav-chip:focus-visible {
-  color: var(--primary);
-  transform: translateX(10px);
-}
-
-/* Staggered mask reveal — each chip surfaces in sequence. */
-.nav-overlay.is-open .nav-chip {
-  opacity: 1;
-  transform: translateY(0);
-}
-.nav-overlay.is-open .nav-chip:nth-child(1) { transition-delay: 120ms; }
-.nav-overlay.is-open .nav-chip:nth-child(2) { transition-delay: 190ms; }
-.nav-overlay.is-open .nav-chip:nth-child(3) { transition-delay: 260ms; }
-.nav-overlay.is-open .nav-chip:nth-child(4) { transition-delay: 330ms; }
-
-.nav-overlay-foot {
-  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1),
-              transform 0.5s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-.nav-overlay.is-open .nav-overlay-foot {
-  opacity: 1;
-  transform: none;
-  transition-delay: 420ms;
-}
-
-/* Scroll lock while the menu is up. */
-body.nav-locked { overflow: hidden; }
-
-
-/* ============================================================
-   Section rhythm — only the hero is full-viewport
-   ============================================================ */
-
-.section-container {
-  position: relative;
-  z-index: 1;
-  padding-inline: var(--container-padding);
-  scroll-margin-top: 6rem; /* clears the fixed top bar below 1024 */
-}
-
-@media (min-width: 1025px) {
-  .section-container { scroll-margin-top: 0; }
-}
-
-.hero-section {
-  min-height: 100vh;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding-block: 8rem 11rem; /* asymmetric — sits just above true centre */
-}
-
-.works-posters { padding-block: var(--rhythm) 0; }
-.works-other   { padding-block: var(--rhythm-lg) 0; }
-.contact       { padding-block: var(--rhythm-lg) 0; }
-.site-footer   { padding-block: var(--rhythm) 3rem; }
-
-/* One measure for every block, so the page has a single left edge. */
-.editorial-hero,
-.section-head,
-.gallery-grid,
-.contact-panel,
-.footer-inner {
-  width: 100%;
-  max-width: var(--measure);
-  margin-inline: auto;
-}
-
-
-/* ============================================================
-   Hero
-   ============================================================ */
-
-.editorial-hero {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.ed-body {
+.lightbox-figure {
   display: grid;
-  grid-template-columns: 1fr 340px;
-  align-items: end;
-  gap: 4rem;
-  border-top: 1px solid var(--ink);
-  padding-top: 2rem;
-  margin-bottom: 2rem;
+  width: min(100%, 760px);
+  max-height: 100%;
+  gap: 0.8rem;
+  margin: 0;
 }
 
-.ed-name {
-  font-size: clamp(4rem, 9vw, 8rem);
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  overflow-wrap: anywhere;
-  min-width: 0;
-  /* Hand-drawn drafting flavour: WONK swaps in the irregular alternates.
-     opsz is left to font-optical-sizing: auto (display cut up here). */
-  font-variation-settings: "WONK" 1;
+.lightbox-image {
+  display: block;
+  width: 100%;
+  max-height: min(78vh, 900px);
+  object-fit: contain;
+  background: var(--paper);
+  box-shadow: 18px 22px 0 rgba(0, 0, 0, 0.18);
 }
 
-.ed-side {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding-bottom: 0.5rem;
-  min-width: 0;
-}
-
-.ed-desc {
-  font-size: 1rem;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-/* The one italic serif accent in the hero — a hand-set editorial touch
-   that contrasts the sans body. opsz stays auto (text cut at this size). */
-.ed-desc em {
-  font-family: "Fraunces", "Fraunces Fallback", Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--ink);
-}
-
-.ed-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  border-left: 2px solid var(--primary);
-  padding-left: 1rem;
-}
-
-.ed-meta-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
-  font-size: 0.75rem;
-}
-
-.ed-meta-label {
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.ed-meta-value {
-  color: var(--ink);
-  font-weight: 500;
-  text-align: right;
-}
-
-.ed-open { color: var(--primary); }
-
-/* Sharp plate + tab: the same drawing convention as the CONTACT panel -
-   a hairline box with a dark tab notched into its edge. Zero radius
-   everywhere: shape lock with the rest of the page. */
-.ed-cta {
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  position: relative;
-  padding: 0.55rem 4rem 0.55rem 1.5rem;
-  border: 1px solid var(--ink);
-  background: transparent;
-  color: var(--ink);
-  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
-  font-size: 0.85rem;
-  letter-spacing: 0.05em;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1),
-              border-color 0.4s cubic-bezier(0.32, 0.72, 0, 1),
-              background-color 0.4s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-.ed-cta:active { transform: scale(0.98); }
-
-/* The arrow lives in a dark tab notched into the plate's right edge,
-   exactly like the CONTACT tab hangs off its panel. */
-.ed-cta-arrow {
-  position: absolute;
-  top: -1px;
-  bottom: -1px;
-  right: -1px;
-  width: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--ink);
-  color: #fff;
-  transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1),
-              background-color 0.35s cubic-bezier(0.32, 0.72, 0, 1),
-              color 0.35s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-/* Hover: the hairline ignites red, a whisper of red tint seeps in,
-   and the tab fills red while nudging diagonally. */
-.ed-cta:hover {
-  border-color: var(--primary);
-  background-color: rgba(255, 59, 59, 0.04);
-}
-
-.ed-cta:hover .ed-cta-arrow {
-  transform: translateX(3px); /* slides level - no vertical drift */
-  background: var(--primary);
-  color: #fff;
-}
-
-.ed-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  border-top: 1px solid var(--line);
-  padding-top: 1rem;
-  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
-  font-size: 0.7rem;
-  color: var(--muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-
-/* ============================================================
-   Section heads — same rule the hero uses above .ed-body
-   ============================================================ */
-
-.section-head {
-  border-top: 1px solid var(--ink);
-  padding-top: 1.25rem;
-  margin-bottom: 2.5rem;
+.lightbox-caption {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 2rem;
-}
-
-.section-title {
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.05;
-  text-transform: uppercase;
-  letter-spacing: 0.02em; /* engraved plate caps — a beat wider than base */
-  text-align: left;
-  overflow-wrap: anywhere;
-  min-width: 0;
-}
-
-.section-count {
+  gap: 1rem;
+  color: var(--paper);
   font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--muted);
-  white-space: nowrap;
 }
 
+.lightbox-caption span:first-child { color: var(--muted-light); }
 
-/* ============================================================
-   Galleries
-   Differentiated by what the content actually is:
-   8 portrait links vs 6 landscape figures.
-   ============================================================ */
-
-.gallery-grid {
-  display: grid;
-  gap: var(--gallery-gap);
-  list-style: none;
-  counter-reset: plate;
-}
-
-.gallery--posters {
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-}
-.gallery--posters .node-image { aspect-ratio: 4 / 5; }
-
-.gallery--other {
-  grid-template-columns: repeat(2, 1fr);
-}
-.gallery--other .node-image { aspect-ratio: 16 / 9; }
-
-.operation-node {
-  counter-increment: plate;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  height: 100%;
-}
-
-/* Only the posters are links, so only they get the pointer and the lift. */
-a.operation-node {
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-  transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-a.operation-node:hover {
-  transform: translateY(-6px);
-}
-
-.node-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.node-core {
-  width: 8px;
-  height: 8px;
-  flex: none;
-  clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0 50%);
-  background: var(--accent);
-}
-
-.node-label {
-  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* Plate number is decorative — generated so it can never go stale. */
-.node-label::before {
-  content: counter(plate, decimal-leading-zero) " - ";
-  color: var(--ink);
-  transition: color 0.4s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-a.operation-node:hover .node-label::before,
-a.operation-node:focus-visible .node-label::before {
-  color: var(--primary);
-}
-
-.node-image {
-  display: block;
-  width: 100%;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  background: var(--paper);
-  padding: 4px;
-  transition: border-color 0.4s cubic-bezier(0.32, 0.72, 0, 1),
-              box-shadow 0.5s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-/* The hairline ignites on hover: a crisp 1px ring plus a soft red halo. */
-a.operation-node:hover .node-image {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 1px rgba(255, 59, 59, 0.5),
-              0 18px 44px -18px rgba(255, 59, 59, 0.35);
-}
-
-.node-image img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-a.operation-node:hover .node-image img,
-a.operation-node:focus-visible .node-image img {
-  transform: scale(1.04);
-}
-
-
-/* ============================================================
-   Contact
-   ============================================================ */
-
-.contact-panel {
-  background: var(--glass);
-  border: 1px solid var(--line);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 3rem;
-  position: relative;
-  box-shadow: 0 20px 40px rgba(26, 21, 21, 0.05);
-}
-
-/* Label tab notched into the panel edge — a real drawing convention. */
-.panel-tab {
+.lightbox-close,
+.lightbox-nav {
   position: absolute;
-  top: -12px;
-  left: 20px;
-  background: var(--ink);
-  color: #fff;
-  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
-  font-size: 0.7rem;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  padding: 4px 12px;
-}
-
-.contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  place-items: center;
+  border: 1px solid rgba(248, 244, 238, 0.38);
+  background: transparent;
+  color: var(--paper);
+  cursor: pointer;
+  transition: border-color var(--anim-standard), background-color var(--anim-standard), color var(--anim-standard), transform var(--anim-standard);
 }
 
-.panel-title {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  color: var(--ink);
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 0.5rem;
+.lightbox-close {
+  top: clamp(1rem, 3vw, 2.5rem);
+  right: clamp(1rem, 3vw, 2.5rem);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  line-height: 1;
 }
 
-.terminal-link {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  min-height: 44px;
+.lightbox-nav {
+  top: 50%;
+  width: 42px;
+  height: 42px;
+  transform: translateY(-50%);
   font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
-  color: var(--ink);
-  text-decoration: none;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  border: 1px solid transparent;
-  transition: border-color var(--anim-standard), background-color var(--anim-standard);
+  font-size: 1.1rem;
 }
 
-.terminal-link svg { flex: none; }
+.lightbox-prev { left: clamp(1rem, 3vw, 3rem); }
+.lightbox-next { right: clamp(1rem, 3vw, 3rem); }
+.lightbox-close:hover, .lightbox-nav:hover { border-color: var(--primary); background: var(--primary); color: var(--paper); }
+.lightbox-nav:disabled { opacity: 0.35; cursor: default; }
+.lightbox-nav:active, .lightbox-close:active { transform: translateY(-50%) scale(0.94); }
+.lightbox-close:active { transform: scale(0.94); }
 
-.terminal-link:hover {
-  border-color: var(--primary);
-  background: rgba(255, 59, 59, 0.05);
-}
-
-.affil-item {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
-  font-size: 0.9rem;
-}
-
-.affil-role { color: var(--muted); }
-
-.affil-item span.year {
+.lightbox-original {
+  justify-self: start;
   color: var(--primary);
-  white-space: nowrap;
-}
-
-
-/* ============================================================
-   Footer — mirrors the hero's closing rule
-   ============================================================ */
-
-.footer-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  border-top: 1px solid var(--line);
-  padding-top: 1rem;
   font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
-  font-size: 0.7rem;
-  color: var(--muted);
+  font-size: 0.68rem;
   letter-spacing: 0.08em;
+  text-decoration: none;
   text-transform: uppercase;
 }
 
+.lightbox-original:hover { color: var(--paper); }
 
-/* ============================================================
-   Reveal — gallery cards only, one orchestrated entrance
-   ============================================================ */
-
-/* Hero entrance — blur-fade, gated on html.js so no-JS stays visible.
-   JS drops the class once settled so hover physics (CTA pill, gallery)
-   own their transitions again. */
-html.js .hero-reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  filter: blur(8px);
-  transition: opacity 0.8s cubic-bezier(0.32, 0.72, 0, 1),
-              transform 0.8s cubic-bezier(0.32, 0.72, 0, 1),
-              filter 0.8s cubic-bezier(0.32, 0.72, 0, 1);
-  transition-delay: var(--delay, 0s);
+/* Copy action sits under the email link and reports inline. */
+.copy-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0.1rem 0 1rem 0.7rem;
+  padding: 0.35rem 0;
+  border: 0;
+  border-bottom: 1px solid rgba(248, 244, 238, 0.35);
+  background: transparent;
+  color: var(--muted-light);
+  font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color var(--anim-standard), border-color var(--anim-standard), transform var(--anim-standard);
 }
 
-html.js .hero-reveal.is-visible {
-  opacity: 1;
-  transform: none;
-  filter: none;
+.copy-email:hover { border-color: var(--primary); color: var(--paper); transform: translateX(4px); }
+.copy-email span { color: var(--primary); font-size: 0.9rem; }
+.copy-feedback { display: block; min-height: 1.2em; margin: -0.35rem 0 0.85rem 0.7rem; color: var(--primary); font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace; font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* Reveal states are gated on JS; no-JS remains fully usable. */
+html.js .hero-reveal { opacity: 0; filter: blur(8px); transform: translateY(18px); transition: opacity 850ms var(--anim-standard), transform 850ms var(--anim-standard), filter 850ms var(--anim-standard); transition-delay: var(--delay, 0s); }
+html.js .hero-reveal.is-visible { opacity: 1; filter: none; transform: none; }
+.animate-on-scroll { opacity: 0; filter: blur(6px); transform: translateY(24px); transition: opacity 850ms var(--anim-standard), transform 850ms var(--anim-standard), filter 850ms var(--anim-standard); transition-delay: var(--delay, 0s); }
+.animate-on-scroll.is-visible { opacity: 1; filter: none; transform: none; }
+
+@media (max-width: 1100px) {
+  :root { --container-padding: 6vw; }
+  .gallery--posters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gallery--posters > li:nth-child(4), .gallery--posters > li:nth-child(8) { margin-top: 0; }
 }
-
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  filter: blur(6px);
-  transition: opacity 0.8s cubic-bezier(0.32, 0.72, 0, 1),
-              transform 0.8s cubic-bezier(0.32, 0.72, 0, 1),
-              filter 0.8s cubic-bezier(0.32, 0.72, 0, 1);
-  transition-delay: var(--delay, 0s);
-}
-
-.animate-on-scroll.is-visible {
-  opacity: 1;
-  transform: none;
-  filter: none;
-}
-
-
-/* ============================================================
-   Breakpoints — 1024 (nav rail -> top bar), 860 (columns collapse)
-   ============================================================ */
 
 @media (max-width: 1024px) {
-  :root {
-    --container-padding: 6vw;
-    --gallery-gap: 2rem;
-  }
-
+  :root { --container-padding: 5vw; --gallery-gap: 1.35rem; }
   .brand-header { display: none; }
-
-  .line-sidebar {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    transform: none;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: calc(1.1rem + env(safe-area-inset-top)) var(--container-padding) 1.1rem;
-    background: rgba(253, 250, 249, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--line);
-  }
-
+  .line-sidebar { top: 0; left: 0; width: 100%; height: auto; flex-direction: row; align-items: center; justify-content: space-between; padding: calc(1rem + env(safe-area-inset-top)) var(--container-padding) 1rem; border-bottom: 1px solid var(--line); background: rgba(238, 232, 223, 0.84); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transform: none; }
   .sidebar-logo { display: block; }
   .sidebar-line { display: none; }
-
-  /* With JS the chips live in the fullscreen overlay. */
   .js .sidebar-nav { display: none; }
   .js .nav-toggle { display: flex; }
-
-  /* No-JS fallback: the rail collapses into a plain horizontal chip row. */
   html:not(.js) .nav-toggle { display: none; }
   html:not(.js) .nav-links-container { flex-direction: row; gap: 1.25rem; }
   html:not(.js) .nav-chip::before { display: none; }
   html:not(.js) .nav-chip:hover { transform: none; }
 }
 
-/* Desktop never shows the mobile menu. */
-@media (min-width: 1025px) {
-  .nav-overlay { display: none; }
-}
+@media (min-width: 1025px) { .nav-overlay { display: none; } }
 
 @media (max-width: 860px) {
-  :root {
-    --container-padding: 5vw;
-    --gallery-gap: 1.5rem;
-  }
-
-  .ed-body {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .ed-name { font-size: clamp(3rem, 12vw, 5rem); }
-
-  .gallery--other { grid-template-columns: 1fr; }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .contact-panel { padding: 2rem 1.5rem; }
+  .hero-section { min-height: auto; padding-block: 10rem 7rem; }
+  .ed-body { grid-template-columns: 1fr; gap: 2.5rem; }
+  .ed-name { max-width: 8ch; font-size: clamp(4.2rem, 16vw, 8rem); }
+  .ed-side { max-width: 35rem; }
+  .gallery--posters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery--posters > li:nth-child(2), .gallery--posters > li:nth-child(6) { margin-top: 2rem; }
+  .gallery--posters > li:nth-child(4), .gallery--posters > li:nth-child(8) { margin-top: 0; }
+  .gallery--other { grid-template-columns: 1fr; row-gap: 2.5rem; }
+  .gallery--other > li:nth-child(2), .gallery--other > li:nth-child(3) { margin-top: 0; }
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .contact-panel { box-shadow: 12px 14px 0 rgba(27, 24, 21, 0.08); }
 }
 
-/* ============================================================
-   Reduced motion
-   Every reveal here is transition-driven, so transition-duration
-   matters as much as animation-duration. The final-state override
-   doubles as the no-JS fallback.
-   ============================================================ */
+@media (max-width: 520px) {
+  :root { --container-padding: 1.25rem; }
+  .hero-section { padding-block: 8rem 5rem; }
+  .ed-name { font-size: clamp(3.7rem, 18vw, 5.5rem); }
+  .ed-meta-item { align-items: flex-start; flex-direction: column; gap: 0.15rem; }
+  .ed-meta-value { text-align: left; }
+  .section-head { align-items: flex-start; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+  .section-title { font-size: clamp(2.5rem, 14vw, 4.5rem); }
+  .gallery--posters { gap: 1rem; }
+  .gallery--posters > li:nth-child(2), .gallery--posters > li:nth-child(6) { margin-top: 1rem; }
+  .contact-panel { padding: 2.5rem 1.1rem 1.5rem; }
+  .terminal-link { font-size: 0.68rem; }
+  .affil-item { align-items: flex-start; flex-direction: column; gap: 0.35rem; }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    animation-delay: 0ms !important;
-    transition-duration: 0.01ms !important;
-    transition-delay: 0ms !important;
-  }
-
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important; transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
   html { scroll-behavior: auto; }
-
-  .animate-on-scroll,
-  .hero-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-  }
+  .animate-on-scroll, .hero-reveal { opacity: 1 !important; filter: none !important; transform: none !important; }
 }
