@@ -1,0 +1,2 @@
+# Normalize the ignore file even in an existing Windows checkout.
+.gitignore text eol=lf

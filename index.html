@@ -8,7 +8,8 @@
     <meta name="description" content="Akamiya Chizui (Desca) - designer and developer in Indonesia. Open for UI, graphic, and web commissions.">
     <link rel="canonical" href="https://chizui.dev/">
     <meta name="color-scheme" content="light">
-    <meta name="theme-color" content="#fdfaf9">
+    <meta name="theme-color" content="#eee8df">
+    <link rel="icon" href="Assets/logo.png" type="image/png">
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="chizz.ui">
@@ -23,97 +24,85 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- The two critical latin woff2 files start downloading immediately, in
-         parallel with the stylesheet. If Google bumps the version segment of
-         a URL, the preload 404s harmlessly and the stylesheet still wins. -->
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/fraunces/v38/6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2">
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2">
-    <script>document.documentElement.classList.add('js');</script>
-    <link rel="stylesheet" href="style.css?v=2.14.0">
-    <script src="script.js?v=2.10.0" defer></script>
+    <link rel="stylesheet" href="style.css?v=3.0.0">
+    <script src="script.js?v=3.0.0" defer></script>
 </head>
 <body>
-    <!-- Warm gradient + 72px drafting grid + paper grain. All three are static. -->
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="blueprint-bg" aria-hidden="true"></div>
 
-    <header class="brand-header">
-        <p class="nav-brand">chizz.ui</p>
+    <header class="site-header">
+        <a class="nav-brand" href="#home" aria-label="chizz.ui home">chizz<span class="brand-dot">.</span>ui<span class="brand-note">Independent designer</span></a>
+        <nav class="desktop-nav" aria-label="Primary">
+            <a href="#home" class="nav-chip active" aria-current="location">Home</a>
+            <a href="#works" class="nav-chip">Posters</a>
+            <a href="#other" class="nav-chip">Other works</a>
+            <a href="#contact" class="nav-chip">Contact <span aria-hidden="true">↗</span></a>
+        </nav>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="nav-overlay" aria-label="Open menu">
+            <span>Menu</span><span class="menu-mark" aria-hidden="true">+</span>
+        </button>
     </header>
 
-    <nav class="line-sidebar" aria-label="Primary">
-        <p class="sidebar-logo">chizz.ui</p>
-        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-overlay" aria-label="Open menu">
-            <span class="nav-toggle-line" aria-hidden="true"></span>
-            <span class="nav-toggle-line" aria-hidden="true"></span>
-            <span class="nav-toggle-line" aria-hidden="true"></span>
-        </button>
-        <div class="sidebar-nav">
-            <div class="sidebar-line">
-                <div class="sidebar-indicator" id="nav-indicator"></div>
-            </div>
-            <div class="nav-links-container">
-                <a href="#home" class="nav-chip active" aria-current="true">Home</a>
-                <a href="#works" class="nav-chip">Posters</a>
-                <a href="#other" class="nav-chip">Other</a>
-                <a href="#contact" class="nav-chip">Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="nav-overlay" id="nav-overlay" aria-hidden="true" inert>
+    <dialog class="nav-overlay" id="nav-overlay" aria-label="Navigation menu">
+        <div class="menu-heading"><span class="nav-brand">chizz.ui</span><button class="menu-close" type="button" aria-label="Close menu">Close <span aria-hidden="true">×</span></button></div>
         <nav class="nav-overlay-menu" aria-label="Mobile">
-            <a href="#home" class="nav-chip active" aria-current="true">Home</a>
-            <a href="#works" class="nav-chip">Posters</a>
-            <a href="#other" class="nav-chip">Other</a>
-            <a href="#contact" class="nav-chip">Contact</a>
+            <a href="#home" class="nav-chip active" aria-current="location"><span>01</span>Home</a>
+            <a href="#works" class="nav-chip"><span>02</span>Posters</a>
+            <a href="#other" class="nav-chip"><span>03</span>Other works</a>
+            <a href="#contact" class="nav-chip"><span>04</span>Contact</a>
         </nav>
-        <p class="nav-overlay-foot">chizz.ui - open for commissions</p>
-    </div>
+        <p class="nav-overlay-foot">Based in Indonesia · Open for commissions</p>
+    </dialog>
 
-    <main>
+    <main id="main" tabindex="-1">
         <section class="hero-section section-container" id="home" aria-labelledby="ed-name">
             <div class="editorial-hero">
+                <div class="hero-topline"><span class="eyebrow">Design &amp; development</span><a class="availability" href="#contact"><span aria-hidden="true"></span>Open for commissions</a></div>
                 <div class="ed-body">
-                    <h1 class="ed-name hero-reveal" id="ed-name">Akamiya<br>Chizui</h1>
+                    <div class="hero-intro">
+                        <p class="hero-kicker">A small corner of the internet by</p>
+                        <h1 class="ed-name" id="ed-name">Akamiya<br><em>Chizui.</em></h1>
+                    </div>
                     <div class="ed-side">
-                        <p class="ed-desc hero-reveal">
-                            Hi, I'm Desca - a designer and developer <em>who likes to make things</em>.
-                            I take commissions for UI, graphic work, and web.
-                        </p>
-                        <div class="ed-meta hero-reveal">
-                            <div class="ed-meta-item">
-                                <span class="ed-meta-label">Based in</span>
-                                <span class="ed-meta-value">Indonesia</span>
-                            </div>
-                            <div class="ed-meta-item">
-                                <span class="ed-meta-label">Status</span>
-                                <span class="ed-meta-value ed-open">Open for work</span>
-                            </div>
-                            <div class="ed-meta-item">
-                                <span class="ed-meta-label">Platform</span>
-                                <span class="ed-meta-value">VGen, Insta, Facebook</span>
-                            </div>
-                        </div>
-                        <a href="#works" class="ed-cta hero-reveal">
-                            <span class="ed-cta-label">See my work</span>
-                            <span class="ed-cta-arrow" aria-hidden="true">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="m13 5 7 7-7 7"/></svg>
-                            </span>
-                        </a>
+                        <p class="ed-desc">Hi, I'm Desca — a designer &amp; developer in Indonesia. I make posters, interfaces, and things for the web.</p>
+                        <a href="#works" class="ed-cta">Explore the archive <span aria-hidden="true">↘</span></a>
                     </div>
                 </div>
 
-                <div class="ed-footer hero-reveal">
-                    <span>Portfolio &amp; Commissions</span>
-                    <span>2024—2026</span>
+                <div class="gallery-room" role="region" aria-label="Interactive poster gallery" aria-roledescription="carousel" data-renderer="static">
+                    <div class="stage-topline"><span class="eyebrow">A few things I've made</span><span class="stage-mode">Selected posters</span></div>
+                    <div class="gallery-stage" aria-label="Browse posters" aria-describedby="stage-instructions">
+                        <div class="stage-fallback">
+                            <img class="fallback-side fallback-left" src="Assets/Preview/poster8.webp" width="640" height="800" alt="" decoding="async">
+                            <a class="stage-poster" href="https://www.instagram.com/p/DIATJgmTR5A/" target="_blank" rel="noopener noreferrer" aria-label="View poster 01 on Instagram">
+                                <img class="fallback-main" src="Assets/Preview/poster1.webp" width="640" height="800" alt="Poster design, plate 01" fetchpriority="high" decoding="async">
+                            </a>
+                            <img class="fallback-side fallback-right" src="Assets/Preview/poster2.webp" width="640" height="800" alt="" decoding="async">
+                        </div>
+                    </div>
+                    <div class="stage-bottomline">
+                        <p class="stage-instructions" id="stage-instructions">A selection from the poster archive.</p>
+                        <div class="stage-controls" hidden>
+                            <button class="stage-arrow stage-prev" type="button" aria-label="Previous poster">←</button>
+                            <span class="stage-count" role="status" aria-live="polite" aria-atomic="true">01 / 08</span>
+                            <button class="stage-arrow stage-next" type="button" aria-label="Next poster">→</button>
+                            <button class="stage-open" type="button" aria-label="View selected poster">Take a closer look <span aria-hidden="true">↗</span></button>
+                        </div>
+                    </div>
+                    <div class="stage-settings" hidden>
+                        <button class="motion-toggle" type="button" aria-pressed="false">Pause motion</button>
+                        <button class="view-toggle" type="button" aria-pressed="false">Use simple view</button>
+                    </div>
                 </div>
+                <div class="ed-footer"><span>Independent by nature. Curious by default.</span><a href="#works">Scroll to the archive <span aria-hidden="true">↓</span></a></div>
             </div>
         </section>
 
         <section class="works-posters section-container" id="works" aria-labelledby="title-posters">
             <div class="section-head animate-me">
-                <h2 class="section-title" id="title-posters">Poster Design</h2>
-                <p class="section-count">8 works</p>
+                <div><p class="eyebrow">01 / The poster archive</p><h2 class="section-title" id="title-posters">Made to <em>stand out.</em></h2></div>
+                <p class="section-count">Poster design<br><span>8 works</span></p>
             </div>
 
             <!-- Plate numbers come from a CSS counter, so inserting a poster renumbers the rest. -->
@@ -125,7 +114,7 @@
                             <span class="node-label">Instagram</span>
                         </span>
                         <span class="node-image">
-                            <img src="Assets/Poster/poster1.webp" alt="Poster design, plate 01" width="2160" height="2700" loading="lazy" decoding="async">
+                            <img src="Assets/Poster/poster1.webp" data-preview="Assets/Preview/poster1.webp" srcset="Assets/Preview/poster1.webp 640w, Assets/Poster/poster1.webp 2160w" sizes="(max-width: 860px) 45vw, (max-width: 1100px) 28vw, 22vw" alt="Poster design, plate 01" width="2160" height="2700" loading="lazy" decoding="async">
                         </span>
                     </a>
                 </li>
@@ -136,7 +125,7 @@
                             <span class="node-label">Instagram</span>
                         </span>
                         <span class="node-image">
-                            <img src="Assets/Poster/poster2.webp" alt="Poster design, plate 02" width="2160" height="2700" loading="lazy" decoding="async">
+                            <img src="Assets/Poster/poster2.webp" data-preview="Assets/Preview/poster2.webp" srcset="Assets/Preview/poster2.webp 640w, Assets/Poster/poster2.webp 2160w" sizes="(max-width: 860px) 45vw, (max-width: 1100px) 28vw, 22vw" alt="Poster design, plate 02" width="2160" height="2700" loading="lazy" decoding="async">
                         </span>
                     </a>
                 </li>
@@ -147,7 +136,7 @@
                             <span class="node-label">Instagram</span>
                         </span>
                         <span class="node-image">
-                            <img src="Assets/Poster/poster3.webp" alt="Poster design, plate 03" width="2160" height="2700" loading="lazy" decoding="async">
+                            <img src="Assets/Poster/poster3.webp" data-preview="Assets/Preview/poster3.webp" srcset="Assets/Preview/poster3.webp 640w, Assets/Poster/poster3.webp 2160w" sizes="(max-width: 860px) 45vw, (max-width: 1100px) 28vw, 22vw" alt="Poster design, plate 03" width="2160" height="2700" loading="lazy" decoding="async">
                         </span>
                     </a>
                 </li>
@@ -158,7 +147,7 @@
                             <span class="node-label">Instagram</span>
                         </span>
                         <span class="node-image">
-                            <img src="Assets/Poster/poster4.webp" alt="Poster design, plate 04" width="2160" height="2700" loading="lazy" decoding="async">
+                            <img src="Assets/Poster/poster4.webp" data-preview="Assets/Preview/poster4.webp" srcset="Assets/Preview/poster4.webp 640w, Assets/Poster/poster4.webp 2160w" sizes="(max-width: 860px) 45vw, (max-width: 1100px) 28vw, 22vw" alt="Poster design, plate 04" width="2160" height="2700" loading="lazy" decoding="async">
                         </span>
                     </a>
                 </li>
@@ -169,7 +158,7 @@
                             <span class="node-label">Instagram</span>
                         </span>
                         <span class="node-image">
-                            <img src="Assets/Poster/poster5.webp" alt="Poster design, plate 05" width="2160" height="2700" loading="lazy" decoding="async">
+                            <img src="Assets/Poster/poster5.webp" data-preview="Assets/Preview/poster5.webp" srcset="Assets/Preview/poster5.webp 640w, Assets/Poster/poster5.webp 2160w" sizes="(max-width: 860px) 45vw, (max-width: 1100px) 28vw, 22vw" alt="Poster design, plate 05" width="2160" height="2700" loading="lazy" decoding="async">
                         </span>
                     </a>
                 </li>
@@ -180,7 +169,7 @@
                             <span class="node-label">Instagram</span>
                         </span>
                         <span class="node-image">
-                            <img src="Assets/Poster/poster6.webp" alt="Poster design, plate 06" width="2160" height="2700" loading="lazy" decoding="async">
+                            <img src="Assets/Poster/poster6.webp" data-preview="Assets/Preview/poster6.webp" srcset="Assets/Preview/poster6.webp 640w, Assets/Poster/poster6.webp 2160w" sizes="(max-width: 860px) 45vw, (max-width: 1100px) 28vw, 22vw" alt="Poster design, plate 06" width="2160" height="2700" loading="lazy" decoding="async">
                         </span>
                     </a>
                 </li>
@@ -191,7 +180,7 @@
                             <span class="node-label">Instagram</span>
                         </span>
                         <span class="node-image">
-                            <img src="Assets/Poster/poster7.webp" alt="Poster design, plate 07" width="2160" height="2700" loading="lazy" decoding="async">
+                            <img src="Assets/Poster/poster7.webp" data-preview="Assets/Preview/poster7.webp" srcset="Assets/Preview/poster7.webp 640w, Assets/Poster/poster7.webp 2160w" sizes="(max-width: 860px) 45vw, (max-width: 1100px) 28vw, 22vw" alt="Poster design, plate 07" width="2160" height="2700" loading="lazy" decoding="async">
                         </span>
                     </a>
                 </li>
@@ -202,7 +191,7 @@
                             <span class="node-label">Facebook</span>
                         </span>
                         <span class="node-image">
-                            <img src="Assets/Poster/poster8.webp" alt="Poster design, plate 08" width="2160" height="2700" loading="lazy" decoding="async">
+                            <img src="Assets/Poster/poster8.webp" data-preview="Assets/Preview/poster8.webp" srcset="Assets/Preview/poster8.webp 640w, Assets/Poster/poster8.webp 2160w" sizes="(max-width: 860px) 45vw, (max-width: 1100px) 28vw, 22vw" alt="Poster design, plate 08" width="2160" height="2700" loading="lazy" decoding="async">
                         </span>
                     </a>
                 </li>
@@ -211,11 +200,11 @@
 
         <section class="works-other section-container" id="other" aria-labelledby="title-other">
             <div class="section-head animate-me">
-                <h2 class="section-title" id="title-other">Other Design</h2>
-                <p class="section-count">6 works</p>
+                <div><p class="eyebrow">02 / Beyond the poster</p><h2 class="section-title" id="title-other">A little <em>of everything.</em></h2></div>
+                <p class="section-count">Other design<br><span>6 works</span></p>
             </div>
 
-            <!-- No destinations, so these are figures rather than links — no pointer, no lift, not focusable. -->
+            <!-- Figures remain readable without JS; preview buttons are added progressively. -->
             <ul class="gallery-grid gallery--other" role="list">
                 <li>
                     <figure class="operation-node animate-me">
@@ -288,7 +277,11 @@
 
         <section class="contact section-container" id="contact" aria-labelledby="title-contact">
             <div class="contact-panel">
-                <h2 class="panel-tab" id="title-contact">CONTACT</h2>
+                <div class="contact-heading">
+                    <p class="eyebrow">03 / Let's make something</p>
+                    <h2 id="title-contact">Have an idea?<br><a href="mailto:keju@chizui.dev"><em>Let's talk.</em> <span aria-hidden="true">↗</span></a></h2>
+                    <p>Open for UI, graphic design, and web commissions.</p>
+                </div>
                 <div class="contact-grid">
                     <div>
                         <h3 class="panel-title">ELSEWHERE</h3>
@@ -297,7 +290,7 @@
                             keju@chizui.dev
                         </a>
                         <button class="copy-email" type="button" data-copy-email="keju@chizui.dev">
-                            <span aria-hidden="true">↗</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></svg>
                             Copy email
                         </button>
                         <span class="copy-feedback" role="status" aria-live="polite"></span>
@@ -318,7 +311,7 @@
                         </a>
                         <a href="https://github.com/Chizuui" target="_blank" rel="noopener noreferrer" class="terminal-link">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                            Github
+                            GitHub
                         </a>
                     </div>
 
@@ -353,8 +346,9 @@
 
     <footer class="site-footer section-container">
         <div class="footer-inner">
-            <span>chizz.ui</span>
+            <a class="footer-brand" href="#home">chizz.ui</a>
             <span>© 2025-2026 · All rights reserved</span>
+            <a href="#home">Back to top ↑</a>
         </div>
     </footer>
 </body>

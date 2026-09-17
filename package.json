@@ -1,0 +1,22 @@
+{
+  "name": "chizz-ui-portfolio",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Chizui's static editorial portfolio with a progressive Three.js gallery.",
+  "scripts": {
+    "dev": "node tools/serve.mjs",
+    "vendor": "node tools/sync-three.mjs",
+    "check": "node --check script.js && node --check gallery.js && node --check gallery-scene.js && node --check tools/serve.mjs && node --check tools/sync-three.mjs",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui"
+  },
+  "dependencies": {
+    "three": "0.186.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
+    "esbuild": "0.28.2"
+  }
+}

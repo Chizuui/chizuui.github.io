@@ -1,0 +1,50 @@
+[
+  {
+    "file": "Assets/Preview/poster1.webp",
+    "width": 640,
+    "height": 800,
+    "bytes": 81690
+  },
+  {
+    "file": "Assets/Preview/poster2.webp",
+    "width": 640,
+    "height": 800,
+    "bytes": 65158
+  },
+  {
+    "file": "Assets/Preview/poster3.webp",
+    "width": 640,
+    "height": 800,
+    "bytes": 69494
+  },
+  {
+    "file": "Assets/Preview/poster4.webp",
+    "width": 640,
+    "height": 800,
+    "bytes": 62084
+  },
+  {
+    "file": "Assets/Preview/poster5.webp",
+    "width": 640,
+    "height": 800,
+    "bytes": 72720
+  },
+  {
+    "file": "Assets/Preview/poster6.webp",
+    "width": 640,
+    "height": 800,
+    "bytes": 67812
+  },
+  {
+    "file": "Assets/Preview/poster7.webp",
+    "width": 640,
+    "height": 800,
+    "bytes": 77108
+  },
+  {
+    "file": "Assets/Preview/poster8.webp",
+    "width": 640,
+    "height": 800,
+    "bytes": 71100
+  }
+]
