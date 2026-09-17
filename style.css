@@ -81,8 +81,10 @@ body.nav-locked, body.lightbox-locked { overflow: hidden; }
 
 /* An asymmetrical introduction gives way to a full-width, tactile gallery. */
 .hero-topline { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.availability { display: inline-flex; align-items: center; gap: 0.6rem; min-height: 44px; color: var(--primary); font-size: 0.68rem; text-decoration: none; }
-.availability span { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.availability { display: inline-flex; align-items: center; gap: 0.75rem; min-height: 44px; padding: 0.35rem 0 0.35rem 0.9rem; border-left: 1px solid var(--primary); color: var(--ink); font-size: 0.68rem; text-decoration: none; transition: color var(--anim-standard), padding var(--anim-standard); }
+.availability:hover { padding-left: 1.2rem; color: var(--primary); }
+.availability-label { letter-spacing: 0.01em; }
+.availability-arrow { color: var(--primary); font-size: 1.1rem; line-height: 1; }
 .ed-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, 310px); align-items: end; gap: 4rem; padding-block: 1.5rem 3rem; }
 .hero-kicker { margin-bottom: 1.1rem; color: var(--muted); font-size: 0.75rem; }
 .ed-name { color: var(--ink); font-size: clamp(5rem, 9.2vw, 9rem); font-weight: 500; letter-spacing: -0.075em; line-height: 0.9; }

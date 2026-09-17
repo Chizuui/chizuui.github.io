@@ -22,8 +22,9 @@ export function initGallery(posters, openPoster) {
     let loading = false;
     let inView = true;
     let overlayOpen = Boolean(document.querySelector('dialog[open]'));
-    let paused = readPreference('paused') || reducedMotion.matches;
-    let simple = readPreference('simple') || reducedMotion.matches || Boolean(navigator.connection?.saveData);
+    // Desktop opens in the full experience. Respect accessibility and data-saving signals.
+    let paused = reducedMotion.matches;
+    let simple = reducedMotion.matches || Boolean(navigator.connection?.saveData);
 
     function readPreference(key) {
         try { return localStorage.getItem(`chizz-gallery-${key}`) === 'true'; }
